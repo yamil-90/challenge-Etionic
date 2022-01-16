@@ -14,8 +14,15 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
                 </div>
+                 <div id="mainApp">main react app</div>
+                    @auth()
+                        <script>
+                            window.userId = {{auth()->user()->id}}
+                            window.favoritesIdArray =
+                            {!!$favoritesIdArray!!}
+                        </script>
+                    @endauth
             </div>
         </div>
     </div>

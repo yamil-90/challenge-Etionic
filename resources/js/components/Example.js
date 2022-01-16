@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
-import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header} from 'semantic-ui-react';
+import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
 
 const Example = () => {
 
@@ -11,9 +11,9 @@ const Example = () => {
     const [news, setNews] = useState([])
     const [newsToRender, setNewsToRender] = useState([])
     const [opacity, setOpacity] = useState(0.5)
-
     const [openPortal, setOpenPortal] = useState(false)
     const [portalMessage, setPortalMessage] = useState('')
+    const [favorites, setFavorites] = useState([])
 
 
     //portal functions
@@ -27,8 +27,8 @@ const Example = () => {
         setOpenPortal(false)
     }
 
-    const showStatusPortal = (status)=>{
-        const message = status === 'ok'?'Favorite was saved':'There was an error while saving'
+    const showStatusPortal = (status) => {
+        const message = status === 'ok' ? 'Favorite was saved' : 'There was an error while saving'
         handleOpen()
         setPortalMessage(message)
     }
@@ -46,23 +46,20 @@ const Example = () => {
         }
     }, [activePage]);
 
+
     useEffect(() => {
         const fetchData = async () => {
-            // console.log('get all')
+            setFavorites(window.favoritesIdArray);
+            console.log(window.favoritesIdArray)
             await getAllNews();
         }
-        axios.get('/api/user')
-            .then(response => {
-                console.log('user es', response.data);
-            });
-
         fetchData();
     }, [getAllNews]);
+
     useEffect(() => {
         if (news.length !== 0) {
             // console.log('cycle start')
             cycleTheNews()
-
         }
     }, [news])
 
@@ -115,24 +112,24 @@ const Example = () => {
     return (
         <>
             <Portal
-            closeOnTriggerClick
-            openOnTriggerClick
-            onOpen={handleOpen}
-            onClose={handleClose}
-          >
-            <Segment
-              style={{
-                left: '40%',
-                position: 'fixed',
-                top: '50%',
-                zIndex: 1000,
-              }}
+                closeOnTriggerClick
+                openOnTriggerClick
+                onOpen={handleOpen}
+                onClose={handleClose}
             >
-              <Header>Notification</Header>
-              <p>{portalMessage}</p>
-              <p>To close, simply click the close button or click away</p>
-            </Segment>
-          </Portal>
+                <Segment
+                    style={{
+                        left: '40%',
+                        position: 'fixed',
+                        top: '50%',
+                        zIndex: 1000,
+                    }}
+                >
+                    <Header>Notification</Header>
+                    <p>{portalMessage}</p>
+                    <p>To close, simply click the close button or click away</p>
+                </Segment>
+            </Portal>
             {(newsToRender.length === 0 && (
                 <Dimmer inverted active style={{paddingTop: 20, paddingBottom: 20}}>
                     <Loader inverted>Loading...</Loader>
@@ -148,12 +145,26 @@ const Example = () => {
                 <Table.Body>
                     {(newsToRender.length !== 0 && Promise.allSettled(newsToRender)) && newsToRender.map((data) => (
                         <Table.Row key={data.id}>
-                            <Table.Cell>{data.title}</Table.Cell>
                             <Table.Cell>
-                                <Button
-                                    icon="star"
-                                    onClick={() => setFavorite(data.title,data.id, data.url)}
-                                />
+                                <a href={data.url} target="_blank">
+                                    <Icon name="external alternate"/>
+                                </a>
+                                {data.title}
+
+                            </Table.Cell>
+                            <Table.Cell>
+                                {console.log(window.favoritesIdArray.indexOf(String(data.id)))}
+                                {console.log(data)}
+                                {window.favoritesIdArray.indexOf(String(data.id)) ?
+                                    <Button
+                                        icon="star"
+                                        onClick={() => setFavorite(data.title, data.id, data.url)}
+                                    /> :
+                                    <Button
+                                        icon="trash"
+                                        onClick={() => setFavorite(data.title, data.id, data.url)}
+                                    />
+                                }
                             </Table.Cell>
                         </Table.Row>
                     ))}

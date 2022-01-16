@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $favoritesIdArray = DB::table('favorites')->select('link_id')->where('user_id', '=', auth()->user()->id)->pluck('link_id')->toJson();
+        return view('home',['favoritesIdArray'=>$favoritesIdArray]);
     }
 }

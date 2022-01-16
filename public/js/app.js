@@ -6413,8 +6413,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/modules/Dimmer/Dimmer.js");
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Loader/Loader.js");
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/collections/Table/Table.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Pagination/Pagination.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Pagination/Pagination.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -6477,7 +6478,12 @@ var Example = function Example() {
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState14 = _slicedToArray(_useState13, 2),
       portalMessage = _useState14[0],
-      setPortalMessage = _useState14[1]; //portal functions
+      setPortalMessage = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+      _useState16 = _slicedToArray(_useState15, 2),
+      favorites = _useState16[0],
+      setFavorites = _useState16[1]; //portal functions
 
 
   var handleOpen = function handleOpen() {
@@ -6532,10 +6538,12 @@ var Example = function Example() {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                setFavorites(window.favoritesIdArray);
+                console.log(window.favoritesIdArray);
+                _context2.next = 4;
                 return getAllNews();
 
-              case 2:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -6548,9 +6556,6 @@ var Example = function Example() {
       };
     }();
 
-    axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/user').then(function (response) {
-      console.log('user es', response.data);
-    });
     fetchData();
   }, [getAllNews]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
@@ -6586,7 +6591,7 @@ var Example = function Example() {
               _context3.prev = 7;
               _context3.t0 = _context3["catch"](0);
               showStatusPortal();
-              console.log(_context3.t0);
+              console.error(_context3.t0);
 
             case 11:
             case "end":
@@ -6733,20 +6738,31 @@ var Example = function Example() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Body, {
         children: newsToRender.length !== 0 && Promise.allSettled(newsToRender) && newsToRender.map(function (data) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Row, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
-              children: data.title
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_12__["default"], {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+                href: data.url,
+                target: "_blank",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_12__["default"], {
+                  name: "external alternate"
+                })
+              }), data.title]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
+              children: [console.log(window.favoritesIdArray.indexOf(String(data.id))), console.log(data), window.favoritesIdArray.indexOf(String(data.id)) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
                 icon: "star",
                 onClick: function onClick() {
                   return setFavorite(data.title, data.id, data.url);
                 }
-              })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                icon: "trash",
+                onClick: function onClick() {
+                  return setFavorite(data.title, data.id, data.url);
+                }
+              })]
             })]
           }, data.id);
         })
       })]
-    }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
+    }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["default"], {
       boundaryRange: 0,
       defaultActivePage: 1,
       siblingRange: 2,
