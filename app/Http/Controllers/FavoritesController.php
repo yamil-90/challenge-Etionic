@@ -22,9 +22,9 @@ class FavoritesController extends Controller
 
     public function storeFavorite(Request $request)
     {
-        $message = ['status' => 'default error'];
+        $message = ['status' => 'error'];
         $status = 500;
-        if (DB::table('favorites')->where('user_id', '=', $request->user_id)->where('link_id', '=', $request->link_id)->get()->isEmpty()) {
+//
             try {
                 $inputs = $request->validate([
                     'title' => 'required',
@@ -40,7 +40,7 @@ class FavoritesController extends Controller
                 logger($e);
                 $message['status'] = $e->getMessage();
             }
-        } else $this->removeFavorites($request);
+
 
         return response()->json($message, $status);
 

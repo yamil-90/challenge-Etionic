@@ -6483,7 +6483,12 @@ var Example = function Example() {
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState16 = _slicedToArray(_useState15, 2),
       favorites = _useState16[0],
-      setFavorites = _useState16[1]; //portal functions
+      setFavorites = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState18 = _slicedToArray(_useState17, 2),
+      loading = _useState18[0],
+      setLoading = _useState18[1]; //portal functions
 
 
   var handleOpen = function handleOpen() {
@@ -6514,22 +6519,22 @@ var Example = function Example() {
             response = _context.sent;
             data = response.data;
             setOpacity(1);
-            setNews(data); // console.log(data);
-
-            _context.next = 12;
+            setNews(data);
+            setPages(data.length);
+            _context.next = 13;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
 
-          case 12:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 10]]);
   })), [activePage]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var fetchData = /*#__PURE__*/function () {
@@ -6610,7 +6615,7 @@ var Example = function Example() {
     var activePage = _ref4.activePage;
     setActivePage(activePage);
     getAllNews();
-    setOpacity(0.5);
+    setLoading(true);
   };
 
   var cycleTheNews = /*#__PURE__*/function () {
@@ -6628,8 +6633,9 @@ var Example = function Example() {
             case 4:
               result = _context4.sent;
               setNewsToRender(result);
+              setLoading(false);
 
-            case 6:
+            case 7:
             case "end":
               return _context4.stop();
           }
@@ -6715,7 +6721,7 @@ var Example = function Example() {
           children: "To close, simply click the close button or click away"
         })]
       })
-    }), newsToRender.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
       inverted: true,
       active: true,
       style: {
@@ -6746,18 +6752,18 @@ var Example = function Example() {
                   name: "external alternate"
                 })
               }), data.title]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
-              children: [console.log(window.favoritesIdArray.indexOf(String(data.id))), console.log(data), window.favoritesIdArray.indexOf(String(data.id)) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
-                icon: "star",
-                onClick: function onClick() {
-                  return setFavorite(data.title, data.id, data.url);
-                }
-              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
+              children: window.favoritesIdArray.indexOf(data.id) > -1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
                 icon: "trash",
                 onClick: function onClick() {
                   return setFavorite(data.title, data.id, data.url);
                 }
-              })]
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                icon: "star",
+                onClick: function onClick() {
+                  return setFavorite(data.title, data.id, data.url);
+                }
+              })
             })]
           }, data.id);
         })

@@ -14,6 +14,7 @@ const Example = () => {
     const [openPortal, setOpenPortal] = useState(false)
     const [portalMessage, setPortalMessage] = useState('')
     const [favorites, setFavorites] = useState([])
+    const [loading, setLoading] = useState(true)
 
 
     //portal functions
@@ -40,7 +41,8 @@ const Example = () => {
             const {data} = response;
             setOpacity(1);
             setNews(data);
-            // console.log(data);
+            setPages(data.length);
+
         } catch (e) {
             console.log(e)
         }
@@ -61,6 +63,7 @@ const Example = () => {
             // console.log('cycle start')
             cycleTheNews()
         }
+
     }, [news])
 
     const setFavorite = async (title, link_id, link) => {
@@ -83,7 +86,7 @@ const Example = () => {
     const handlePaginationChange = (e, {activePage}) => {
         setActivePage(activePage);
         getAllNews();
-        setOpacity(0.5);
+        setLoading(true)
     };
 
     const cycleTheNews = async () => {
@@ -92,6 +95,7 @@ const Example = () => {
 
         const result = await getTheNews(newsArray)
         setNewsToRender(result)
+        setLoading(false)
 
     }
 
@@ -106,6 +110,7 @@ const Example = () => {
                 console.log(err)
             }
         }))
+
 
     }
 
@@ -130,11 +135,11 @@ const Example = () => {
                     <p>To close, simply click the close button or click away</p>
                 </Segment>
             </Portal>
-            {(newsToRender.length === 0 && (
+            {loading && (
                 <Dimmer inverted active style={{paddingTop: 20, paddingBottom: 20}}>
                     <Loader inverted>Loading...</Loader>
                 </Dimmer>
-            ))}
+            )}
             <Table>
                 <Table.Header>
                     <Table.Row>
@@ -153,15 +158,13 @@ const Example = () => {
 
                             </Table.Cell>
                             <Table.Cell>
-                                {console.log(window.favoritesIdArray.indexOf(String(data.id)))}
-                                {console.log(data)}
-                                {window.favoritesIdArray.indexOf(String(data.id)) ?
+                                {window.favoritesIdArray.indexOf(data.id) > -1 ?
                                     <Button
-                                        icon="star"
+                                        icon="trash"
                                         onClick={() => setFavorite(data.title, data.id, data.url)}
                                     /> :
                                     <Button
-                                        icon="trash"
+                                        icon="star"
                                         onClick={() => setFavorite(data.title, data.id, data.url)}
                                     />
                                 }

@@ -14,11 +14,11 @@ class CreateFavoritesTable extends Migration
     public function up()
     {
         Schema::create('favorites', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('title');
             $table->text('link');
-            $table->text('link_id');
+            $table->integer('link_id');
             $table->timestamps();
         });
     }
