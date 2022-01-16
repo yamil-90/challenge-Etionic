@@ -6479,22 +6479,22 @@ var Example = function Example() {
             response = _context.sent;
             data = response.data;
             setOpacity(1);
-            setNews(data);
-            console.log(data);
-            _context.next = 13;
+            setNews(data); // console.log(data);
+
+            _context.next = 12;
             break;
 
-          case 10:
-            _context.prev = 10;
+          case 9:
+            _context.prev = 9;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
 
-          case 13:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 9]]);
   })), [activePage]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var fetchData = /*#__PURE__*/function () {
@@ -6520,72 +6520,95 @@ var Example = function Example() {
     }();
 
     fetchData();
-    cycleTheNews();
   }, [getAllNews]);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (news.length !== 0) {
+      // console.log('cycle start')
+      cycleTheNews();
+    }
+  }, [news]);
 
   var handlePaginationChange = function handlePaginationChange(e, _ref3) {
     var activePage = _ref3.activePage;
     setActivePage(activePage);
-
-    var fetchData = /*#__PURE__*/function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return getAllNews();
-
-              case 2:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
-
-      return function fetchData() {
-        return _ref4.apply(this, arguments);
-      };
-    }();
-
-    fetchData();
+    getAllNews();
     setOpacity(0.5);
   };
 
-  var cycleTheNews = function cycleTheNews() {
-    var pageSize = 10;
-    var newsArray = news.slice((activePage - 1) * pageSize, activePage * pageSize);
-    setNewsToRender(newsArray);
-  };
-
-  var getTheNews = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(newsId) {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+  var cycleTheNews = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var pageSize, newsArray, result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context4.prev = 0;
-              _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_4___default().get("https://hacker-news.firebaseio.com/v0/item/".concat(newsId, ".json"));
+              pageSize = 10;
+              newsArray = news.slice((activePage - 1) * pageSize, activePage * pageSize);
+              _context3.next = 4;
+              return getTheNews(newsArray);
 
-            case 3:
-              response = _context4.sent;
-              _context4.next = 9;
-              break;
+            case 4:
+              result = _context3.sent;
+              setNewsToRender(result);
 
             case 6:
-              _context4.prev = 6;
-              _context4.t0 = _context4["catch"](0);
-              console.log(_context4.t0);
-
-            case 9:
             case "end":
-              return _context4.stop();
+              return _context3.stop();
           }
         }
-      }, _callee4, null, [[0, 6]]);
+      }, _callee3);
+    }));
+
+    return function cycleTheNews() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+
+  var getTheNews = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(newsArray) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              return _context5.abrupt("return", Promise.all(newsArray.map( /*#__PURE__*/function () {
+                var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(newsId) {
+                  var result;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+                    while (1) {
+                      switch (_context4.prev = _context4.next) {
+                        case 0:
+                          _context4.prev = 0;
+                          _context4.next = 3;
+                          return axios__WEBPACK_IMPORTED_MODULE_4___default().get("https://hacker-news.firebaseio.com/v0/item/".concat(newsId, ".json"));
+
+                        case 3:
+                          result = _context4.sent;
+                          return _context4.abrupt("return", result.data);
+
+                        case 7:
+                          _context4.prev = 7;
+                          _context4.t0 = _context4["catch"](0);
+                          console.log(_context4.t0);
+
+                        case 10:
+                        case "end":
+                          return _context4.stop();
+                      }
+                    }
+                  }, _callee4, null, [[0, 7]]);
+                }));
+
+                return function (_x2) {
+                  return _ref6.apply(this, arguments);
+                };
+              }())));
+
+            case 1:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
     }));
 
     return function getTheNews(_x) {
@@ -6614,16 +6637,16 @@ var Example = function Example() {
             children: "Id"
           })]
         })
-      }), newsToRender && newsToRender.map(function (post, index) {
+      }), newsToRender.length !== 0 && Promise.allSettled(newsToRender) && newsToRender.map(function (data) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Body, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Row, {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
-              children: post.title
+              children: data.title
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
-              children: post.id
+              children: data.id
             })]
           })
-        }, index);
+        });
       })]
     }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
       boundaryRange: 0,

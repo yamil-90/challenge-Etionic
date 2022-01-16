@@ -19,7 +19,7 @@ const Example = () => {
             const {data} = response;
             setOpacity(1);
             setNews(data);
-            console.log(data);
+            // console.log(data);
 
 
         } catch (e) {
@@ -29,33 +29,47 @@ const Example = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            // console.log('get all')
             await getAllNews();
         }
-        fetchData();
-        cycleTheNews()
-    }, [getAllNews]);
 
-    const handlePaginationChange = (e, { activePage }) => {
-        setActivePage(activePage);
-        const fetchData = async () => {
-            await getAllNews();
-        }
         fetchData();
+    }, [getAllNews]);
+    useEffect(() => {
+        if (news.length !== 0) {
+            // console.log('cycle start')
+            cycleTheNews()
+
+        }
+    }, [news])
+
+    const handlePaginationChange = (e, {activePage}) => {
+        setActivePage(activePage);
+        getAllNews();
         setOpacity(0.5);
     };
 
-    const cycleTheNews = () => {
+    const cycleTheNews = async () => {
         const pageSize = 10;
         const newsArray = news.slice((activePage - 1) * pageSize, activePage * pageSize);
-        setNewsToRender(newsArray)
+
+        const result = await getTheNews(newsArray)
+        setNewsToRender(result)
+
     }
 
-    const getTheNews = async (newsId) => {
-        try {
-            const response = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`)
-        } catch (err) {
-            console.log(err)
-        }
+    const getTheNews = async (newsArray) => {
+        // console.log('get the news inside')
+        return Promise.all(newsArray.map(async newsId => {
+            try {
+                const result =  await axios.get(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`)
+                // console.log('result dentro de get the news es', result)
+                return result.data
+            } catch (err) {
+                console.log(err)
+            }
+        }))
+
     }
 
     return (
@@ -72,11 +86,11 @@ const Example = () => {
                         <Table.HeaderCell>Id</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
-                {newsToRender && newsToRender.map((post, index) => (
-                    <Table.Body key={index}>
+                {(newsToRender.length !== 0 && Promise.allSettled(newsToRender)) && newsToRender.map((data) => (
+                    <Table.Body>
                         <Table.Row>
-                            <Table.Cell>{post.title}</Table.Cell>
-                            <Table.Cell>{post.id}</Table.Cell>
+                            <Table.Cell>{data.title}</Table.Cell>
+                            <Table.Cell>{data.id}</Table.Cell>
                         </Table.Row>
                     </Table.Body>
                 ))}
