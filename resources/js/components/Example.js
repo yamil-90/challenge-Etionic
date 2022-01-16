@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
-import {Dimmer, Loader, Table, Pagination, Button} from 'semantic-ui-react';
+import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header} from 'semantic-ui-react';
 
 const Example = () => {
 
@@ -11,6 +11,27 @@ const Example = () => {
     const [news, setNews] = useState([])
     const [newsToRender, setNewsToRender] = useState([])
     const [opacity, setOpacity] = useState(0.5)
+
+    const [openPortal, setOpenPortal] = useState(false)
+    const [portalMessage, setPortalMessage] = useState('')
+
+
+    //portal functions
+
+    const handleOpen = () => {
+        setOpenPortal(true)
+
+    }
+
+    const handleClose = () => {
+        setOpenPortal(false)
+    }
+
+    const showStatusPortal = (status)=>{
+        const message = status === 'ok'?'Favorite was saved':'There was an error while saving'
+        handleOpen()
+        setPortalMessage(message)
+    }
 
     const getAllNews = useCallback(async () => {
         try {
@@ -45,16 +66,19 @@ const Example = () => {
         }
     }, [news])
 
-    const setFavorite = async (title, link) => {
+    const setFavorite = async (title, link_id, link) => {
         try {
             const result = await axios.post('/api/save-favorite', {
                 title,
                 link,
+                link_id,
                 user_id: window.userId
             });
-            return result.data;
+
+            showStatusPortal(result.data.status)
         } catch (err) {
-            console.log(err);
+            showStatusPortal()
+            console.error(err);
         }
     };
 
@@ -90,6 +114,25 @@ const Example = () => {
 
     return (
         <>
+            <Portal
+            closeOnTriggerClick
+            openOnTriggerClick
+            onOpen={handleOpen}
+            onClose={handleClose}
+          >
+            <Segment
+              style={{
+                left: '40%',
+                position: 'fixed',
+                top: '50%',
+                zIndex: 1000,
+              }}
+            >
+              <Header>Notification</Header>
+              <p>{portalMessage}</p>
+              <p>To close, simply click the close button or click away</p>
+            </Segment>
+          </Portal>
             {(newsToRender.length === 0 && (
                 <Dimmer inverted active style={{paddingTop: 20, paddingBottom: 20}}>
                     <Loader inverted>Loading...</Loader>
@@ -109,7 +152,7 @@ const Example = () => {
                             <Table.Cell>
                                 <Button
                                     icon="star"
-                                    onClick={() => setFavorite(data.title, data.url)}
+                                    onClick={() => setFavorite(data.title,data.id, data.url)}
                                 />
                             </Table.Cell>
                         </Table.Row>

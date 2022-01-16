@@ -6407,11 +6407,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var semantic_ui_css_semantic_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! semantic-ui-css/semantic.min.css */ "./node_modules/semantic-ui-css/semantic.min.css");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/modules/Dimmer/Dimmer.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Loader/Loader.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/collections/Table/Table.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Pagination/Pagination.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Portal/Portal.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Segment/Segment.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Header/Header.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/modules/Dimmer/Dimmer.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Loader/Loader.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/collections/Table/Table.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Pagination/Pagination.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -6465,6 +6468,31 @@ var Example = function Example() {
       _useState10 = _slicedToArray(_useState9, 2),
       opacity = _useState10[0],
       setOpacity = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState12 = _slicedToArray(_useState11, 2),
+      openPortal = _useState12[0],
+      setOpenPortal = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+      _useState14 = _slicedToArray(_useState13, 2),
+      portalMessage = _useState14[0],
+      setPortalMessage = _useState14[1]; //portal functions
+
+
+  var handleOpen = function handleOpen() {
+    setOpenPortal(true);
+  };
+
+  var handleClose = function handleClose() {
+    setOpenPortal(false);
+  };
+
+  var showStatusPortal = function showStatusPortal(status) {
+    var message = status === 'ok' ? 'Favorite was saved' : 'There was an error while saving';
+    handleOpen();
+    setPortalMessage(message);
+  };
 
   var getAllNews = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
     var response, data;
@@ -6533,7 +6561,7 @@ var Example = function Example() {
   }, [news]);
 
   var setFavorite = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(title, link) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(title, link_id, link) {
       var result;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
@@ -6544,19 +6572,23 @@ var Example = function Example() {
               return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/save-favorite', {
                 title: title,
                 link: link,
+                link_id: link_id,
                 user_id: window.userId
               });
 
             case 3:
               result = _context3.sent;
-              return _context3.abrupt("return", result.data);
+              showStatusPortal(result.data.status);
+              _context3.next = 11;
+              break;
 
             case 7:
               _context3.prev = 7;
               _context3.t0 = _context3["catch"](0);
+              showStatusPortal();
               console.log(_context3.t0);
 
-            case 10:
+            case 11:
             case "end":
               return _context3.stop();
           }
@@ -6564,7 +6596,7 @@ var Example = function Example() {
       }, _callee3, null, [[0, 7]]);
     }));
 
-    return function setFavorite(_x, _x2) {
+    return function setFavorite(_x, _x2, _x3) {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -6639,7 +6671,7 @@ var Example = function Example() {
                   }, _callee5, null, [[0, 7]]);
                 }));
 
-                return function (_x4) {
+                return function (_x5) {
                   return _ref7.apply(this, arguments);
                 };
               }())));
@@ -6652,49 +6684,69 @@ var Example = function Example() {
       }, _callee6);
     }));
 
-    return function getTheNews(_x3) {
+    return function getTheNews(_x4) {
       return _ref6.apply(this, arguments);
     };
   }();
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-    children: [newsToRender.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      closeOnTriggerClick: true,
+      openOnTriggerClick: true,
+      onOpen: handleOpen,
+      onClose: handleClose,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        style: {
+          left: '40%',
+          position: 'fixed',
+          top: '50%',
+          zIndex: 1000
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          children: "Notification"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          children: portalMessage
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          children: "To close, simply click the close button or click away"
+        })]
+      })
+    }), newsToRender.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
       inverted: true,
       active: true,
       style: {
         paddingTop: 20,
         paddingBottom: 20
       },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__["default"], {
         inverted: true,
         children: "Loading..."
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"], {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Header, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Row, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].HeaderCell, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Header, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Row, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].HeaderCell, {
             children: "Title"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].HeaderCell, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].HeaderCell, {
             children: "Save as Favorite"
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Body, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Body, {
         children: newsToRender.length !== 0 && Promise.allSettled(newsToRender) && newsToRender.map(function (data) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Row, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Row, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
               children: data.title
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_11__["default"].Cell, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_12__["default"], {
                 icon: "star",
                 onClick: function onClick() {
-                  return setFavorite(data.title, data.url);
+                  return setFavorite(data.title, data.id, data.url);
                 }
               })
             })]
           }, data.id);
         })
       })]
-    }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
       boundaryRange: 0,
       defaultActivePage: 1,
       siblingRange: 2,
@@ -65831,6 +65883,278 @@ ButtonOr.propTypes =  true ? {
 
 /***/ }),
 
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Header/Header.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Header/Header.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var lodash_es_without__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lodash-es/without */ "./node_modules/lodash-es/without.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Icon */ "./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js");
+/* harmony import */ var _Image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Image */ "./node_modules/semantic-ui-react/dist/es/elements/Image/Image.js");
+/* harmony import */ var _HeaderSubheader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HeaderSubheader */ "./node_modules/semantic-ui-react/dist/es/elements/Header/HeaderSubheader.js");
+/* harmony import */ var _HeaderContent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./HeaderContent */ "./node_modules/semantic-ui-react/dist/es/elements/Header/HeaderContent.js");
+
+
+
+
+
+
+
+
+
+
+/**
+ * A header provides a short summary of content
+ */
+
+function Header(props) {
+  var attached = props.attached,
+      block = props.block,
+      children = props.children,
+      className = props.className,
+      color = props.color,
+      content = props.content,
+      disabled = props.disabled,
+      dividing = props.dividing,
+      floated = props.floated,
+      icon = props.icon,
+      image = props.image,
+      inverted = props.inverted,
+      size = props.size,
+      sub = props.sub,
+      subheader = props.subheader,
+      textAlign = props.textAlign;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('ui', color, size, (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(block, 'block'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(disabled, 'disabled'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(dividing, 'dividing'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useValueAndKey)(floated, 'floated'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(icon === true, 'icon'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(image === true, 'image'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(inverted, 'inverted'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(sub, 'sub'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOrValueAndKey)(attached, 'attached'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useTextAlignProp)(textAlign), 'header', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(Header, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_5__["default"])(Header, props);
+
+  if (!_lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children)) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+      className: classes
+    }), children);
+  }
+
+  var iconElement = _Icon__WEBPACK_IMPORTED_MODULE_7__["default"].create(icon, {
+    autoGenerateKey: false
+  });
+  var imageElement = _Image__WEBPACK_IMPORTED_MODULE_8__["default"].create(image, {
+    autoGenerateKey: false
+  });
+  var subheaderElement = _HeaderSubheader__WEBPACK_IMPORTED_MODULE_9__["default"].create(subheader, {
+    autoGenerateKey: false
+  });
+
+  if (iconElement || imageElement) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+      className: classes
+    }), iconElement || imageElement, (content || subheaderElement) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_HeaderContent__WEBPACK_IMPORTED_MODULE_10__["default"], null, content, subheaderElement));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), content, subheaderElement);
+}
+
+Header.handledProps = ["as", "attached", "block", "children", "className", "color", "content", "disabled", "dividing", "floated", "icon", "image", "inverted", "size", "sub", "subheader", "textAlign"];
+Header.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().elementType),
+
+  /** Attach header  to other content, like a segment. */
+  attached: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf(['top', 'bottom'])]),
+
+  /** Format header to appear inside a content block. */
+  block: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().string),
+
+  /** Color of the header. */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.COLORS),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_13__.contentShorthand,
+
+  /** Show that the header is inactive. */
+  disabled: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
+
+  /** Divide header from the content below it. */
+  dividing: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
+
+  /** Header can sit to the left or right of other content. */
+  floated: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.FLOATS),
+
+  /** Add an icon by icon name or pass an Icon. */
+  icon: _lib__WEBPACK_IMPORTED_MODULE_13__.every([_lib__WEBPACK_IMPORTED_MODULE_13__.disallow(['image']), prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool), _lib__WEBPACK_IMPORTED_MODULE_13__.itemShorthand])]),
+
+  /** Add an image by img src or pass an Image. */
+  image: _lib__WEBPACK_IMPORTED_MODULE_13__.every([_lib__WEBPACK_IMPORTED_MODULE_13__.disallow(['icon']), prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool), _lib__WEBPACK_IMPORTED_MODULE_13__.itemShorthand])]),
+
+  /** Inverts the color of the header for dark backgrounds. */
+  inverted: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
+
+  /** Content headings are sized with em and are based on the font-size of their container. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf((0,lodash_es_without__WEBPACK_IMPORTED_MODULE_14__["default"])(_lib__WEBPACK_IMPORTED_MODULE_12__.SIZES, 'big', 'massive', 'mini')),
+
+  /** Headers may be formatted to label smaller or de-emphasized content. */
+  sub: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
+
+  /** Shorthand for Header.Subheader. */
+  subheader: _lib__WEBPACK_IMPORTED_MODULE_13__.itemShorthand,
+
+  /** Align header content. */
+  textAlign: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.TEXT_ALIGNMENTS)
+} : 0;
+Header.Content = _HeaderContent__WEBPACK_IMPORTED_MODULE_10__["default"];
+Header.Subheader = _HeaderSubheader__WEBPACK_IMPORTED_MODULE_9__["default"];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Header/HeaderContent.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Header/HeaderContent.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+
+
+
+
+
+/**
+ * Header content wraps the main content when there is an adjacent Icon or Image.
+ */
+
+function HeaderContent(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('content', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_3__["default"])(HeaderContent, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(HeaderContent, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_5__.isNil(children) ? content : children);
+}
+
+HeaderContent.handledProps = ["as", "children", "className", "content"];
+HeaderContent.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_7__.contentShorthand
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderContent);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Header/HeaderSubheader.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Header/HeaderSubheader.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/factories.js");
+
+
+
+
+
+/**
+ * Headers may contain subheaders.
+ */
+
+function HeaderSubheader(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('sub header', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_3__["default"])(HeaderSubheader, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(HeaderSubheader, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_5__.isNil(children) ? content : children);
+}
+
+HeaderSubheader.handledProps = ["as", "children", "className", "content"];
+HeaderSubheader.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_7__.contentShorthand
+} : 0;
+HeaderSubheader.create = (0,_lib__WEBPACK_IMPORTED_MODULE_8__.createShorthandFactory)(HeaderSubheader, function (content) {
+  return {
+    content: content
+  };
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderSubheader);
+
+/***/ }),
+
 /***/ "./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js ***!
@@ -66787,6 +67111,301 @@ Loader.propTypes =  true ? {
   size: prop_types__WEBPACK_IMPORTED_MODULE_7___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_9__.SIZES)
 } : 0;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Loader);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Segment/Segment.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Segment/Segment.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var lodash_es_without__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lodash-es/without */ "./node_modules/lodash-es/without.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _SegmentGroup__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SegmentGroup */ "./node_modules/semantic-ui-react/dist/es/elements/Segment/SegmentGroup.js");
+/* harmony import */ var _SegmentInline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SegmentInline */ "./node_modules/semantic-ui-react/dist/es/elements/Segment/SegmentInline.js");
+
+
+
+
+
+
+
+
+/**
+ * A segment is used to create a grouping of related content.
+ */
+
+function Segment(props) {
+  var attached = props.attached,
+      basic = props.basic,
+      children = props.children,
+      circular = props.circular,
+      className = props.className,
+      clearing = props.clearing,
+      color = props.color,
+      compact = props.compact,
+      content = props.content,
+      disabled = props.disabled,
+      floated = props.floated,
+      inverted = props.inverted,
+      loading = props.loading,
+      placeholder = props.placeholder,
+      padded = props.padded,
+      piled = props.piled,
+      raised = props.raised,
+      secondary = props.secondary,
+      size = props.size,
+      stacked = props.stacked,
+      tertiary = props.tertiary,
+      textAlign = props.textAlign,
+      vertical = props.vertical;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('ui', color, size, (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(basic, 'basic'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(circular, 'circular'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(clearing, 'clearing'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(compact, 'compact'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(disabled, 'disabled'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(inverted, 'inverted'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(loading, 'loading'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(placeholder, 'placeholder'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(piled, 'piled'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(raised, 'raised'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(secondary, 'secondary'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(stacked, 'stacked'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(tertiary, 'tertiary'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(vertical, 'vertical'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOrValueAndKey)(attached, 'attached'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOrValueAndKey)(padded, 'padded'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useTextAlignProp)(textAlign), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useValueAndKey)(floated, 'floated'), 'segment', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(Segment, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_5__["default"])(Segment, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children) ? content : children);
+}
+
+Segment.handledProps = ["as", "attached", "basic", "children", "circular", "className", "clearing", "color", "compact", "content", "disabled", "floated", "inverted", "loading", "padded", "piled", "placeholder", "raised", "secondary", "size", "stacked", "tertiary", "textAlign", "vertical"];
+Segment.Group = _SegmentGroup__WEBPACK_IMPORTED_MODULE_7__["default"];
+Segment.Inline = _SegmentInline__WEBPACK_IMPORTED_MODULE_8__["default"];
+Segment.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().elementType),
+
+  /** Attach segment to other content, like a header. */
+  attached: prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOf(['top', 'bottom'])]),
+
+  /** A basic segment has no special formatting. */
+  basic: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().node),
+
+  /** A segment can be circular. */
+  circular: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().string),
+
+  /** A segment can clear floated content. */
+  clearing: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Segment can be colored. */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_10__.COLORS),
+
+  /** A segment may take up only as much space as is necessary. */
+  compact: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_11__.contentShorthand,
+
+  /** A segment may show its content is disabled. */
+  disabled: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Segment content can be floated to the left or right. */
+  floated: prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_10__.FLOATS),
+
+  /** A segment can have its colors inverted for contrast. */
+  inverted: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** A segment may show its content is being loaded. */
+  loading: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** A segment can increase its padding. */
+  padded: prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOf(['very'])]),
+
+  /** A segment can be used to reserve space for conditionally displayed content. */
+  placeholder: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Formatted to look like a pile of pages. */
+  piled: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** A segment may be formatted to raise above the page. */
+  raised: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** A segment can be formatted to appear less noticeable. */
+  secondary: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** A segment can have different sizes. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOf((0,lodash_es_without__WEBPACK_IMPORTED_MODULE_12__["default"])(_lib__WEBPACK_IMPORTED_MODULE_10__.SIZES, 'medium')),
+
+  /** Formatted to show it contains multiple pages. */
+  stacked: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** A segment can be formatted to appear even less noticeable. */
+  tertiary: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
+
+  /** Formats content to be aligned as part of a vertical group. */
+  textAlign: prop_types__WEBPACK_IMPORTED_MODULE_9___default().oneOf((0,lodash_es_without__WEBPACK_IMPORTED_MODULE_12__["default"])(_lib__WEBPACK_IMPORTED_MODULE_10__.TEXT_ALIGNMENTS, 'justified')),
+
+  /** Formats content to be aligned vertically. */
+  vertical: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Segment);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Segment/SegmentGroup.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Segment/SegmentGroup.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var lodash_es_without__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lodash-es/without */ "./node_modules/lodash-es/without.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+
+
+
+
+
+
+/**
+ * A group of segments can be formatted to appear together.
+ */
+
+function SegmentGroup(props) {
+  var children = props.children,
+      className = props.className,
+      compact = props.compact,
+      content = props.content,
+      horizontal = props.horizontal,
+      piled = props.piled,
+      raised = props.raised,
+      size = props.size,
+      stacked = props.stacked;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('ui', size, (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(compact, 'compact'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(horizontal, 'horizontal'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(piled, 'piled'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(raised, 'raised'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(stacked, 'stacked'), 'segments', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(SegmentGroup, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_5__["default"])(SegmentGroup, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children) ? content : children);
+}
+
+SegmentGroup.handledProps = ["as", "children", "className", "compact", "content", "horizontal", "piled", "raised", "size", "stacked"];
+SegmentGroup.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().string),
+
+  /** A segment may take up only as much space as is necessary. */
+  compact: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_8__.contentShorthand,
+
+  /** Formats content to be aligned horizontally. */
+  horizontal: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+
+  /** Formatted to look like a pile of pages. */
+  piled: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+
+  /** A segment group may be formatted to raise above the page. */
+  raised: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+
+  /** A segment group can have different sizes. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_7___default().oneOf((0,lodash_es_without__WEBPACK_IMPORTED_MODULE_9__["default"])(_lib__WEBPACK_IMPORTED_MODULE_10__.SIZES, 'medium')),
+
+  /** Formatted to show it contains multiple pages. */
+  stacked: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SegmentGroup);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Segment/SegmentInline.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Segment/SegmentInline.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+
+
+
+
+
+/**
+ * A placeholder segment can be inline.
+ */
+
+function SegmentInline(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('inline', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_3__["default"])(SegmentInline, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(SegmentInline, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_5__.isNil(children) ? content : children);
+}
+
+SegmentInline.handledProps = ["as", "children", "className", "content"];
+SegmentInline.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_7__.contentShorthand
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SegmentInline);
 
 /***/ }),
 

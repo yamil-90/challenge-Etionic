@@ -18,6 +18,7 @@ class CreateFavoritesTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('title');
             $table->text('link');
+            $table->text('link_id');
             $table->timestamps();
         });
     }

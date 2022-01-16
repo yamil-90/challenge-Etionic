@@ -12,6 +12,7 @@ class Favorites extends Model
     protected $fillable = [
         'title',
         'link',
+        'link_id',
         'user_id'
     ];
 
@@ -19,4 +20,6 @@ class Favorites extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
 }

@@ -10,7 +10,7 @@ class FavoritesController extends Controller
     //
     public function getFavorites()
     {
-        $favorites = auth()->user()->favorites();
+        $favorites = auth()->user()->favorites() ?: [];
         return $favorites;
     }
 
@@ -22,7 +22,8 @@ class FavoritesController extends Controller
             $inputs = $request->validate([
                 'title' => 'required',
                 'link' => 'required',
-                'user_id' => 'required'
+                'user_id' => 'required',
+                'link_id'=> 'required'
             ]);
             Favorites::create($inputs);
             $message = ['status' => 'ok'];
@@ -30,6 +31,7 @@ class FavoritesController extends Controller
 
         } catch (\Exception $e) {
             logger($e);
+            $message['status'] = $e->getMessage();
         }
         return response()->json($message, $status);
 
