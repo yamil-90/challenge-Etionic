@@ -15,6 +15,7 @@ const Example = () => {
     const [portalMessage, setPortalMessage] = useState('')
     const [favorites, setFavorites] = useState([])
     const [loading, setLoading] = useState(true)
+    const [reloading, setReloading] = useState(false)
 
 
     //portal functions
@@ -56,15 +57,19 @@ const Example = () => {
             await getAllNews();
         }
         fetchData();
-    }, [getAllNews]);
+        setReloading(false)
+    }, [getAllNews, reloading]);
 
     useEffect(() => {
         if (news.length !== 0) {
             // console.log('cycle start')
             cycleTheNews()
         }
-
     }, [news])
+
+    useEffect(() => {
+        setReloading(false)
+    }, [reloading])
 
     const setFavorite = async (title, link_id, link) => {
         try {
@@ -74,7 +79,7 @@ const Example = () => {
                 link_id,
                 user_id: window.userId
             });
-
+            setReloading(true)
             showStatusPortal(result.data.status)
         } catch (err) {
             showStatusPortal()
@@ -158,7 +163,7 @@ const Example = () => {
 
                             </Table.Cell>
                             <Table.Cell>
-                                {window.favoritesIdArray.indexOf(data.id) > -1 ?
+                                {(window.favoritesIdArray.indexOf(data.id) > -1 && !reloading) ?
                                     <Button
                                         icon="trash"
                                         onClick={() => setFavorite(data.title, data.id, data.url)}
