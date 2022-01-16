@@ -6410,7 +6410,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/modules/Dimmer/Dimmer.js");
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Loader/Loader.js");
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/collections/Table/Table.js");
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Pagination/Pagination.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/addons/Pagination/Pagination.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -6528,91 +6529,127 @@ var Example = function Example() {
     }
   }, [news]);
 
-  var handlePaginationChange = function handlePaginationChange(e, _ref3) {
-    var activePage = _ref3.activePage;
+  var setFavorite = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(title, id) {
+      var result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/save-favorite', {
+                title: title,
+                id: id
+              });
+
+            case 3:
+              result = _context3.sent;
+              return _context3.abrupt("return", result.data);
+
+            case 7:
+              _context3.prev = 7;
+              _context3.t0 = _context3["catch"](0);
+              console.log(_context3.t0);
+
+            case 10:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[0, 7]]);
+    }));
+
+    return function setFavorite(_x, _x2) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
+  var handlePaginationChange = function handlePaginationChange(e, _ref4) {
+    var activePage = _ref4.activePage;
     setActivePage(activePage);
     getAllNews();
     setOpacity(0.5);
   };
 
   var cycleTheNews = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var pageSize, newsArray, result;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               pageSize = 10;
               newsArray = news.slice((activePage - 1) * pageSize, activePage * pageSize);
-              _context3.next = 4;
+              _context4.next = 4;
               return getTheNews(newsArray);
 
             case 4:
-              result = _context3.sent;
+              result = _context4.sent;
               setNewsToRender(result);
 
             case 6:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
 
     return function cycleTheNews() {
-      return _ref4.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   }();
 
   var getTheNews = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(newsArray) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(newsArray) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              return _context5.abrupt("return", Promise.all(newsArray.map( /*#__PURE__*/function () {
-                var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(newsId) {
+              return _context6.abrupt("return", Promise.all(newsArray.map( /*#__PURE__*/function () {
+                var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(newsId) {
                   var result;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
                     while (1) {
-                      switch (_context4.prev = _context4.next) {
+                      switch (_context5.prev = _context5.next) {
                         case 0:
-                          _context4.prev = 0;
-                          _context4.next = 3;
+                          _context5.prev = 0;
+                          _context5.next = 3;
                           return axios__WEBPACK_IMPORTED_MODULE_4___default().get("https://hacker-news.firebaseio.com/v0/item/".concat(newsId, ".json"));
 
                         case 3:
-                          result = _context4.sent;
-                          return _context4.abrupt("return", result.data);
+                          result = _context5.sent;
+                          return _context5.abrupt("return", result.data);
 
                         case 7:
-                          _context4.prev = 7;
-                          _context4.t0 = _context4["catch"](0);
-                          console.log(_context4.t0);
+                          _context5.prev = 7;
+                          _context5.t0 = _context5["catch"](0);
+                          console.log(_context5.t0);
 
                         case 10:
                         case "end":
-                          return _context4.stop();
+                          return _context5.stop();
                       }
                     }
-                  }, _callee4, null, [[0, 7]]);
+                  }, _callee5, null, [[0, 7]]);
                 }));
 
-                return function (_x2) {
-                  return _ref6.apply(this, arguments);
+                return function (_x4) {
+                  return _ref7.apply(this, arguments);
                 };
               }())));
 
             case 1:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5);
+      }, _callee6);
     }));
 
-    return function getTheNews(_x) {
-      return _ref5.apply(this, arguments);
+    return function getTheNews(_x3) {
+      return _ref6.apply(this, arguments);
     };
   }();
 
@@ -6644,11 +6681,16 @@ var Example = function Example() {
               children: data.title
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
               children: data.id
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
+              icon: "star",
+              onClick: function onClick() {
+                return setFavorite(data.title, data.id);
+              }
             })]
           })
         });
       })]
-    }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__["default"], {
       boundaryRange: 0,
       defaultActivePage: 1,
       siblingRange: 2,
@@ -65212,6 +65254,579 @@ TableRow.create = (0,_lib__WEBPACK_IMPORTED_MODULE_13__.createShorthandFactory)(
 
 /***/ }),
 
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var lodash_es_invoke__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash-es/invoke */ "./node_modules/lodash-es/invoke.js");
+/* harmony import */ var lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash-es/isNil */ "./node_modules/lodash-es/isNil.js");
+/* harmony import */ var _fluentui_react_component_ref__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @fluentui/react-component-ref */ "./node_modules/@fluentui/react-component-ref/dist/es/Ref.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/factories.js");
+/* harmony import */ var _Icon_Icon__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Icon/Icon */ "./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js");
+/* harmony import */ var _Label_Label__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Label/Label */ "./node_modules/semantic-ui-react/dist/es/elements/Label/Label.js");
+/* harmony import */ var _ButtonContent__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ButtonContent */ "./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonContent.js");
+/* harmony import */ var _ButtonGroup__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ButtonGroup */ "./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonGroup.js");
+/* harmony import */ var _ButtonOr__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ButtonOr */ "./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonOr.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * A Button indicates a possible user action.
+ * @see Form
+ * @see Icon
+ * @see Label
+ */
+
+var Button = /*#__PURE__*/function (_Component) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(Button, _Component);
+
+  function Button() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+    _this.ref = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_3__.createRef)();
+
+    _this.computeElementType = function () {
+      var _this$props = _this.props,
+          attached = _this$props.attached,
+          label = _this$props.label;
+      if (!(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__["default"])(attached) || !(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__["default"])(label)) return 'div';
+    };
+
+    _this.computeTabIndex = function (ElementType) {
+      var _this$props2 = _this.props,
+          disabled = _this$props2.disabled,
+          tabIndex = _this$props2.tabIndex;
+      if (!(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__["default"])(tabIndex)) return tabIndex;
+      if (disabled) return -1;
+      if (ElementType === 'div') return 0;
+    };
+
+    _this.focus = function () {
+      return (0,lodash_es_invoke__WEBPACK_IMPORTED_MODULE_5__["default"])(_this.ref.current, 'focus');
+    };
+
+    _this.handleClick = function (e) {
+      var disabled = _this.props.disabled;
+
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
+
+      (0,lodash_es_invoke__WEBPACK_IMPORTED_MODULE_5__["default"])(_this.props, 'onClick', e, _this.props);
+    };
+
+    _this.hasIconClass = function () {
+      var _this$props3 = _this.props,
+          labelPosition = _this$props3.labelPosition,
+          children = _this$props3.children,
+          content = _this$props3.content,
+          icon = _this$props3.icon;
+      if (icon === true) return true;
+      return icon && (labelPosition || _lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children) && (0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__["default"])(content));
+    };
+
+    return _this;
+  }
+
+  var _proto = Button.prototype;
+
+  _proto.computeButtonAriaRole = function computeButtonAriaRole(ElementType) {
+    var role = this.props.role;
+    if (!(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__["default"])(role)) return role;
+    if (ElementType !== 'button') return 'button';
+  };
+
+  _proto.render = function render() {
+    var _this$props4 = this.props,
+        active = _this$props4.active,
+        animated = _this$props4.animated,
+        attached = _this$props4.attached,
+        basic = _this$props4.basic,
+        children = _this$props4.children,
+        circular = _this$props4.circular,
+        className = _this$props4.className,
+        color = _this$props4.color,
+        compact = _this$props4.compact,
+        content = _this$props4.content,
+        disabled = _this$props4.disabled,
+        floated = _this$props4.floated,
+        fluid = _this$props4.fluid,
+        icon = _this$props4.icon,
+        inverted = _this$props4.inverted,
+        label = _this$props4.label,
+        labelPosition = _this$props4.labelPosition,
+        loading = _this$props4.loading,
+        negative = _this$props4.negative,
+        positive = _this$props4.positive,
+        primary = _this$props4.primary,
+        secondary = _this$props4.secondary,
+        size = _this$props4.size,
+        toggle = _this$props4.toggle;
+    var baseClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])(color, size, (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(active, 'active'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(basic, 'basic'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(circular, 'circular'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(compact, 'compact'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(fluid, 'fluid'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(this.hasIconClass(), 'icon'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(inverted, 'inverted'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(loading, 'loading'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(negative, 'negative'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(positive, 'positive'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(primary, 'primary'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(secondary, 'secondary'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(toggle, 'toggle'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOrValueAndKey)(animated, 'animated'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOrValueAndKey)(attached, 'attached'));
+    var labeledClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])((0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOrValueAndKey)(labelPosition || !!label, 'labeled'));
+    var wrapperClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])((0,_lib__WEBPACK_IMPORTED_MODULE_7__.useKeyOnly)(disabled, 'disabled'), (0,_lib__WEBPACK_IMPORTED_MODULE_7__.useValueAndKey)(floated, 'floated'));
+    var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_8__["default"])(Button, this.props);
+    var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_9__["default"])(Button, this.props, this.computeElementType);
+    var tabIndex = this.computeTabIndex(ElementType);
+
+    if (!(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_4__["default"])(label)) {
+      var buttonClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])('ui', baseClasses, 'button', className);
+      var containerClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])('ui', labeledClasses, 'button', className, wrapperClasses);
+      var labelElement = _Label_Label__WEBPACK_IMPORTED_MODULE_10__["default"].create(label, {
+        defaultProps: {
+          basic: true,
+          pointing: labelPosition === 'left' ? 'right' : 'left'
+        },
+        autoGenerateKey: false
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+        className: containerClasses,
+        onClick: this.handleClick
+      }), labelPosition === 'left' && labelElement, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_fluentui_react_component_ref__WEBPACK_IMPORTED_MODULE_11__.Ref, {
+        innerRef: this.ref
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("button", {
+        className: buttonClasses,
+        "aria-pressed": toggle ? !!active : undefined,
+        disabled: disabled,
+        tabIndex: tabIndex
+      }, _Icon_Icon__WEBPACK_IMPORTED_MODULE_12__["default"].create(icon, {
+        autoGenerateKey: false
+      }), " ", content)), (labelPosition === 'right' || !labelPosition) && labelElement);
+    }
+
+    var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])('ui', baseClasses, wrapperClasses, labeledClasses, 'button', className);
+    var hasChildren = !_lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children);
+    var role = this.computeButtonAriaRole(ElementType);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_fluentui_react_component_ref__WEBPACK_IMPORTED_MODULE_11__.Ref, {
+      innerRef: this.ref
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+      className: classes,
+      "aria-pressed": toggle ? !!active : undefined,
+      disabled: disabled && ElementType === 'button' || undefined,
+      onClick: this.handleClick,
+      role: role,
+      tabIndex: tabIndex
+    }), hasChildren && children, !hasChildren && _Icon_Icon__WEBPACK_IMPORTED_MODULE_12__["default"].create(icon, {
+      autoGenerateKey: false
+    }), !hasChildren && content));
+  };
+
+  return Button;
+}(react__WEBPACK_IMPORTED_MODULE_3__.Component);
+
+Button.handledProps = ["active", "animated", "as", "attached", "basic", "children", "circular", "className", "color", "compact", "content", "disabled", "floated", "fluid", "icon", "inverted", "label", "labelPosition", "loading", "negative", "onClick", "positive", "primary", "role", "secondary", "size", "tabIndex", "toggle"];
+Button.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().elementType),
+
+  /** A button can show it is currently the active user selection. */
+  active: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A button can animate to show hidden content. */
+  animated: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['fade', 'vertical'])]),
+
+  /** A button can be attached to other content. */
+  attached: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['left', 'right', 'top', 'bottom'])]),
+
+  /** A basic button is less pronounced. */
+  basic: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Primary content. */
+  children: _lib__WEBPACK_IMPORTED_MODULE_14__.every([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().node), _lib__WEBPACK_IMPORTED_MODULE_14__.disallow(['label']), _lib__WEBPACK_IMPORTED_MODULE_14__.givenProps({
+    icon: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().string.isRequired), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().object.isRequired), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().element.isRequired)])
+  }, _lib__WEBPACK_IMPORTED_MODULE_14__.disallow(['icon']))]),
+
+  /** A button can be circular. */
+  circular: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().string),
+
+  /** A button can have different colors */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf([].concat(_lib__WEBPACK_IMPORTED_MODULE_15__.COLORS, ['facebook', 'google plus', 'instagram', 'linkedin', 'twitter', 'vk', 'youtube'])),
+
+  /** A button can reduce its padding to fit into tighter spaces. */
+  compact: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_14__.contentShorthand,
+
+  /** A button can show it is currently unable to be interacted with. */
+  disabled: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A button can be aligned to the left or right of its container. */
+  floated: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_15__.FLOATS),
+
+  /** A button can take the width of its container. */
+  fluid: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Add an Icon by name, props object, or pass an <Icon />. */
+  icon: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().object), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().element)]),
+
+  /** A button can be formatted to appear on dark backgrounds. */
+  inverted: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Add a Label by text, props object, or pass a <Label />. */
+  label: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().object), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().element)]),
+
+  /** A labeled button can format a Label or Icon to appear on the left or right. */
+  labelPosition: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['right', 'left']),
+
+  /** A button can show a loading indicator. */
+  loading: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A button can hint towards a negative consequence. */
+  negative: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /**
+   * Called after user's click.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().func),
+
+  /** A button can hint towards a positive consequence. */
+  positive: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A button can be formatted to show different levels of emphasis. */
+  primary: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** The role of the HTML element. */
+  role: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().string),
+
+  /** A button can be formatted to show different levels of emphasis. */
+  secondary: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A button can have different sizes. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_15__.SIZES),
+
+  /** A button can receive focus. */
+  tabIndex: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().number), (prop_types__WEBPACK_IMPORTED_MODULE_13___default().string)]),
+
+  /** A button can be formatted to toggle on and off. */
+  toggle: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool)
+} : 0;
+Button.defaultProps = {
+  as: 'button'
+};
+Button.Content = _ButtonContent__WEBPACK_IMPORTED_MODULE_16__["default"];
+Button.Group = _ButtonGroup__WEBPACK_IMPORTED_MODULE_17__["default"];
+Button.Or = _ButtonOr__WEBPACK_IMPORTED_MODULE_18__["default"];
+Button.create = (0,_lib__WEBPACK_IMPORTED_MODULE_19__.createShorthandFactory)(Button, function (value) {
+  return {
+    content: value
+  };
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonContent.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonContent.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+
+
+
+
+
+/**
+ * Used in some Button types, such as `animated`.
+ */
+
+function ButtonContent(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      hidden = props.hidden,
+      visible = props.visible;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])((0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(visible, 'visible'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(hidden, 'hidden'), 'content', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(ButtonContent, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_5__["default"])(ButtonContent, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children) ? content : children);
+}
+
+ButtonContent.handledProps = ["as", "children", "className", "content", "hidden", "visible"];
+ButtonContent.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_8__.contentShorthand,
+
+  /** Initially hidden, visible on hover. */
+  hidden: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+
+  /** Initially visible, hidden on hover. */
+  visible: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ButtonContent);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonGroup.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonGroup.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var lodash_es_map__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lodash-es/map */ "./node_modules/lodash-es/map.js");
+/* harmony import */ var lodash_es_isNil__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash-es/isNil */ "./node_modules/lodash-es/isNil.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Button */ "./node_modules/semantic-ui-react/dist/es/elements/Button/Button.js");
+
+
+
+
+
+
+
+
+/**
+ * Buttons can be grouped.
+ */
+
+function ButtonGroup(props) {
+  var attached = props.attached,
+      basic = props.basic,
+      buttons = props.buttons,
+      children = props.children,
+      className = props.className,
+      color = props.color,
+      compact = props.compact,
+      content = props.content,
+      floated = props.floated,
+      fluid = props.fluid,
+      icon = props.icon,
+      inverted = props.inverted,
+      labeled = props.labeled,
+      negative = props.negative,
+      positive = props.positive,
+      primary = props.primary,
+      secondary = props.secondary,
+      size = props.size,
+      toggle = props.toggle,
+      vertical = props.vertical,
+      widths = props.widths;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('ui', color, size, (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(basic, 'basic'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(compact, 'compact'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(fluid, 'fluid'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(icon, 'icon'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(inverted, 'inverted'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(labeled, 'labeled'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(negative, 'negative'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(positive, 'positive'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(primary, 'primary'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(secondary, 'secondary'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(toggle, 'toggle'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(vertical, 'vertical'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOrValueAndKey)(attached, 'attached'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useValueAndKey)(floated, 'floated'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useWidthProp)(widths), 'buttons', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(ButtonGroup, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_5__["default"])(ButtonGroup, props);
+
+  if ((0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_6__["default"])(buttons)) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+      className: classes
+    }), _lib__WEBPACK_IMPORTED_MODULE_7__.isNil(children) ? content : children);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), (0,lodash_es_map__WEBPACK_IMPORTED_MODULE_8__["default"])(buttons, function (button) {
+    return _Button__WEBPACK_IMPORTED_MODULE_9__["default"].create(button);
+  }));
+}
+
+ButtonGroup.handledProps = ["as", "attached", "basic", "buttons", "children", "className", "color", "compact", "content", "floated", "fluid", "icon", "inverted", "labeled", "negative", "positive", "primary", "secondary", "size", "toggle", "vertical", "widths"];
+ButtonGroup.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().elementType),
+
+  /** Groups can be attached to other content. */
+  attached: prop_types__WEBPACK_IMPORTED_MODULE_10___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_10___default().oneOf(['left', 'right', 'top', 'bottom'])]),
+
+  /** Groups can be less pronounced. */
+  basic: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Array of shorthand Button values. */
+  buttons: _lib__WEBPACK_IMPORTED_MODULE_11__.collectionShorthand,
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().string),
+
+  /** Groups can have a shared color. */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_10___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.COLORS),
+
+  /** Groups can reduce their padding to fit into tighter spaces. */
+  compact: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_11__.contentShorthand,
+
+  /** Groups can be aligned to the left or right of its container. */
+  floated: prop_types__WEBPACK_IMPORTED_MODULE_10___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.FLOATS),
+
+  /** Groups can take the width of their container. */
+  fluid: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can be formatted as icons. */
+  icon: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can be formatted to appear on dark backgrounds. */
+  inverted: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can be formatted as labeled icon buttons. */
+  labeled: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can hint towards a negative consequence. */
+  negative: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can hint towards a positive consequence. */
+  positive: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can be formatted to show different levels of emphasis. */
+  primary: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can be formatted to show different levels of emphasis. */
+  secondary: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can have different sizes. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_10___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.SIZES),
+
+  /** Groups can be formatted to toggle on and off. */
+  toggle: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can be formatted to appear vertically. */
+  vertical: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+
+  /** Groups can have their widths divided evenly. */
+  widths: prop_types__WEBPACK_IMPORTED_MODULE_10___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_12__.WIDTHS)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ButtonGroup);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonOr.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Button/ButtonOr.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+
+
+
+
+
+/**
+ * Button groups can contain conditionals.
+ */
+
+function ButtonOr(props) {
+  var className = props.className,
+      text = props.text;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('or', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_3__["default"])(ButtonOr, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(ButtonOr, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes,
+    "data-text": text
+  }));
+}
+
+ButtonOr.handledProps = ["as", "className", "text"];
+ButtonOr.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().elementType),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string),
+
+  /** Or buttons can have their text localized, or adjusted by using the text prop. */
+  text: prop_types__WEBPACK_IMPORTED_MODULE_5___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_5___default().number), (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string)])
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ButtonOr);
+
+/***/ }),
+
 /***/ "./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js ***!
@@ -65462,6 +66077,626 @@ IconGroup.defaultProps = {
   as: 'i'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IconGroup);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Image/Image.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Image/Image.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var lodash_es_isNil__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lodash-es/isNil */ "./node_modules/lodash-es/isNil.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/htmlPropsUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/factories.js");
+/* harmony import */ var _modules_Dimmer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../modules/Dimmer */ "./node_modules/semantic-ui-react/dist/es/modules/Dimmer/Dimmer.js");
+/* harmony import */ var _Label_Label__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Label/Label */ "./node_modules/semantic-ui-react/dist/es/elements/Label/Label.js");
+/* harmony import */ var _ImageGroup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ImageGroup */ "./node_modules/semantic-ui-react/dist/es/elements/Image/ImageGroup.js");
+
+
+
+
+
+
+
+
+
+/**
+ * An image is a graphic representation of something.
+ * @see Icon
+ */
+
+function Image(props) {
+  var avatar = props.avatar,
+      bordered = props.bordered,
+      centered = props.centered,
+      children = props.children,
+      circular = props.circular,
+      className = props.className,
+      content = props.content,
+      dimmer = props.dimmer,
+      disabled = props.disabled,
+      floated = props.floated,
+      fluid = props.fluid,
+      hidden = props.hidden,
+      href = props.href,
+      inline = props.inline,
+      label = props.label,
+      rounded = props.rounded,
+      size = props.size,
+      spaced = props.spaced,
+      verticalAlign = props.verticalAlign,
+      wrapped = props.wrapped,
+      ui = props.ui;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])((0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(ui, 'ui'), size, (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(avatar, 'avatar'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(bordered, 'bordered'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(circular, 'circular'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(centered, 'centered'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(disabled, 'disabled'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(fluid, 'fluid'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(hidden, 'hidden'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(inline, 'inline'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(rounded, 'rounded'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOrValueAndKey)(spaced, 'spaced'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useValueAndKey)(floated, 'floated'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useVerticalAlignProp)(verticalAlign, 'aligned'), 'image', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(Image, props);
+
+  var _partitionHTMLProps = (0,_lib__WEBPACK_IMPORTED_MODULE_5__.partitionHTMLProps)(rest, {
+    htmlProps: _lib__WEBPACK_IMPORTED_MODULE_5__.htmlImageProps
+  }),
+      imgTagProps = _partitionHTMLProps[0],
+      rootProps = _partitionHTMLProps[1];
+
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_6__["default"])(Image, props, function () {
+    if (!(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_7__["default"])(dimmer) || !(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_7__["default"])(label) || !(0,lodash_es_isNil__WEBPACK_IMPORTED_MODULE_7__["default"])(wrapped) || !_lib__WEBPACK_IMPORTED_MODULE_8__.isNil(children)) {
+      return 'div';
+    }
+  });
+
+  if (!_lib__WEBPACK_IMPORTED_MODULE_8__.isNil(children)) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+      className: classes
+    }), children);
+  }
+
+  if (!_lib__WEBPACK_IMPORTED_MODULE_8__.isNil(content)) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+      className: classes
+    }), content);
+  }
+
+  if (ElementType === 'img') {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rootProps, imgTagProps, {
+      className: classes
+    }));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rootProps, {
+    className: classes,
+    href: href
+  }), _modules_Dimmer__WEBPACK_IMPORTED_MODULE_9__["default"].create(dimmer, {
+    autoGenerateKey: false
+  }), _Label_Label__WEBPACK_IMPORTED_MODULE_10__["default"].create(label, {
+    autoGenerateKey: false
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("img", imgTagProps));
+}
+
+Image.handledProps = ["as", "avatar", "bordered", "centered", "children", "circular", "className", "content", "dimmer", "disabled", "floated", "fluid", "hidden", "href", "inline", "label", "rounded", "size", "spaced", "ui", "verticalAlign", "wrapped"];
+Image.Group = _ImageGroup__WEBPACK_IMPORTED_MODULE_11__["default"];
+Image.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().elementType),
+
+  /** An image may be formatted to appear inline with text as an avatar. */
+  avatar: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** An image may include a border to emphasize the edges of white or transparent content. */
+  bordered: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** An image can appear centered in a content block. */
+  centered: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().node),
+
+  /** An image may appear circular. */
+  circular: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_13__.contentShorthand,
+
+  /** An image can show that it is disabled and cannot be selected. */
+  disabled: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** Shorthand for Dimmer. */
+  dimmer: _lib__WEBPACK_IMPORTED_MODULE_13__.itemShorthand,
+
+  /** An image can sit to the left or right of other content. */
+  floated: prop_types__WEBPACK_IMPORTED_MODULE_12___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_14__.FLOATS),
+
+  /** An image can take up the width of its container. */
+  fluid: _lib__WEBPACK_IMPORTED_MODULE_13__.every([(prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool), _lib__WEBPACK_IMPORTED_MODULE_13__.disallow(['size'])]),
+
+  /** An image can be hidden. */
+  hidden: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** Renders the Image as an <a> tag with this href. */
+  href: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().string),
+
+  /** An image may appear inline. */
+  inline: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** Shorthand for Label. */
+  label: _lib__WEBPACK_IMPORTED_MODULE_13__.itemShorthand,
+
+  /** An image may appear rounded. */
+  rounded: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** An image may appear at different sizes. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_12___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_14__.SIZES),
+
+  /** An image can specify that it needs an additional spacing to separate it from nearby content. */
+  spaced: prop_types__WEBPACK_IMPORTED_MODULE_12___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_12___default().oneOf(['left', 'right'])]),
+
+  /** Whether or not to add the ui className. */
+  ui: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool),
+
+  /** An image can specify its vertical alignment. */
+  verticalAlign: prop_types__WEBPACK_IMPORTED_MODULE_12___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_14__.VERTICAL_ALIGNMENTS),
+
+  /** An image can render wrapped in a `div.ui.image` as alternative HTML markup. */
+  wrapped: (prop_types__WEBPACK_IMPORTED_MODULE_12___default().bool)
+} : 0;
+Image.defaultProps = {
+  as: 'img',
+  ui: true
+};
+Image.create = (0,_lib__WEBPACK_IMPORTED_MODULE_15__.createShorthandFactory)(Image, function (value) {
+  return {
+    src: value
+  };
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Image);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Image/ImageGroup.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Image/ImageGroup.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+
+
+
+
+
+/**
+ * A group of images.
+ */
+
+function ImageGroup(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      size = props.size;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('ui', size, className, 'images');
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_3__["default"])(ImageGroup, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(ImageGroup, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_5__.isNil(children) ? content : children);
+}
+
+ImageGroup.handledProps = ["as", "children", "className", "content", "size"];
+ImageGroup.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_7__.contentShorthand,
+
+  /** A group of images can be formatted to have the same size. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_6___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_8__.SIZES)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ImageGroup);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Label/Label.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Label/Label.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Label)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var lodash_es_isUndefined__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lodash-es/isUndefined */ "./node_modules/lodash-es/isUndefined.js");
+/* harmony import */ var lodash_es_invoke__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash-es/invoke */ "./node_modules/lodash-es/invoke.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/factories.js");
+/* harmony import */ var _Icon_Icon__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Icon/Icon */ "./node_modules/semantic-ui-react/dist/es/elements/Icon/Icon.js");
+/* harmony import */ var _Image_Image__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Image/Image */ "./node_modules/semantic-ui-react/dist/es/elements/Image/Image.js");
+/* harmony import */ var _LabelDetail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./LabelDetail */ "./node_modules/semantic-ui-react/dist/es/elements/Label/LabelDetail.js");
+/* harmony import */ var _LabelGroup__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./LabelGroup */ "./node_modules/semantic-ui-react/dist/es/elements/Label/LabelGroup.js");
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * A label displays content classification.
+ */
+
+var Label = /*#__PURE__*/function (_Component) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(Label, _Component);
+
+  function Label() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+
+    _this.handleClick = function (e) {
+      var onClick = _this.props.onClick;
+      if (onClick) onClick(e, _this.props);
+    };
+
+    _this.handleIconOverrides = function (predefinedProps) {
+      return {
+        onClick: function onClick(e) {
+          (0,lodash_es_invoke__WEBPACK_IMPORTED_MODULE_4__["default"])(predefinedProps, 'onClick', e);
+
+          (0,lodash_es_invoke__WEBPACK_IMPORTED_MODULE_4__["default"])(_this.props, 'onRemove', e, _this.props);
+        }
+      };
+    };
+
+    return _this;
+  }
+
+  var _proto = Label.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        active = _this$props.active,
+        attached = _this$props.attached,
+        basic = _this$props.basic,
+        children = _this$props.children,
+        circular = _this$props.circular,
+        className = _this$props.className,
+        color = _this$props.color,
+        content = _this$props.content,
+        corner = _this$props.corner,
+        detail = _this$props.detail,
+        empty = _this$props.empty,
+        floating = _this$props.floating,
+        horizontal = _this$props.horizontal,
+        icon = _this$props.icon,
+        image = _this$props.image,
+        onRemove = _this$props.onRemove,
+        pointing = _this$props.pointing,
+        prompt = _this$props.prompt,
+        removeIcon = _this$props.removeIcon,
+        ribbon = _this$props.ribbon,
+        size = _this$props.size,
+        tag = _this$props.tag;
+    var pointingClass = pointing === true && 'pointing' || (pointing === 'left' || pointing === 'right') && pointing + " pointing" || (pointing === 'above' || pointing === 'below') && "pointing " + pointing;
+    var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])('ui', color, pointingClass, size, (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(active, 'active'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(basic, 'basic'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(circular, 'circular'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(empty, 'empty'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(floating, 'floating'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(horizontal, 'horizontal'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(image === true, 'image'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(prompt, 'prompt'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOnly)(tag, 'tag'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOrValueAndKey)(corner, 'corner'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useKeyOrValueAndKey)(ribbon, 'ribbon'), (0,_lib__WEBPACK_IMPORTED_MODULE_5__.useValueAndKey)(attached, 'attached'), 'label', className);
+    var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_6__["default"])(Label, this.props);
+    var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_7__["default"])(Label, this.props);
+
+    if (!_lib__WEBPACK_IMPORTED_MODULE_8__.isNil(children)) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+        className: classes,
+        onClick: this.handleClick
+      }), children);
+    }
+
+    var removeIconShorthand = (0,lodash_es_isUndefined__WEBPACK_IMPORTED_MODULE_9__["default"])(removeIcon) ? 'delete' : removeIcon;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+      className: classes,
+      onClick: this.handleClick
+    }, rest), _Icon_Icon__WEBPACK_IMPORTED_MODULE_10__["default"].create(icon, {
+      autoGenerateKey: false
+    }), typeof image !== 'boolean' && _Image_Image__WEBPACK_IMPORTED_MODULE_11__["default"].create(image, {
+      autoGenerateKey: false
+    }), content, _LabelDetail__WEBPACK_IMPORTED_MODULE_12__["default"].create(detail, {
+      autoGenerateKey: false
+    }), onRemove && _Icon_Icon__WEBPACK_IMPORTED_MODULE_10__["default"].create(removeIconShorthand, {
+      autoGenerateKey: false,
+      overrideProps: this.handleIconOverrides
+    }));
+  };
+
+  return Label;
+}(react__WEBPACK_IMPORTED_MODULE_3__.Component);
+
+Label.handledProps = ["active", "as", "attached", "basic", "children", "circular", "className", "color", "content", "corner", "detail", "empty", "floating", "horizontal", "icon", "image", "onClick", "onRemove", "pointing", "prompt", "removeIcon", "ribbon", "size", "tag"];
+
+Label.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().elementType),
+
+  /** A label can be active. */
+  active: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A label can attach to a content segment. */
+  attached: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['top', 'bottom', 'top right', 'top left', 'bottom left', 'bottom right']),
+
+  /** A label can reduce its complexity. */
+  basic: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().node),
+
+  /** A label can be circular. */
+  circular: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().string),
+
+  /** Color of the label. */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_14__.COLORS),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_15__.contentShorthand,
+
+  /** A label can position itself in the corner of an element. */
+  corner: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['left', 'right'])]),
+
+  /** Shorthand for LabelDetail. */
+  detail: _lib__WEBPACK_IMPORTED_MODULE_15__.itemShorthand,
+
+  /** Formats the label as a dot. */
+  empty: _lib__WEBPACK_IMPORTED_MODULE_15__.every([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), _lib__WEBPACK_IMPORTED_MODULE_15__.demand(['circular'])]),
+
+  /** Float above another element in the upper right corner. */
+  floating: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** A horizontal label is formatted to label content along-side it horizontally. */
+  horizontal: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Shorthand for Icon. */
+  icon: _lib__WEBPACK_IMPORTED_MODULE_15__.itemShorthand,
+
+  /** A label can be formatted to emphasize an image or prop can be used as shorthand for Image. */
+  image: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), _lib__WEBPACK_IMPORTED_MODULE_15__.itemShorthand]),
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().func),
+
+  /**
+   * Adds an "x" icon, called when "x" is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onRemove: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().func),
+
+  /** A label can point to content next to it. */
+  pointing: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['above', 'below', 'left', 'right'])]),
+
+  /** A label can prompt for an error in your forms. */
+  prompt: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool),
+
+  /** Shorthand for Icon to appear as the last child and trigger onRemove. */
+  removeIcon: _lib__WEBPACK_IMPORTED_MODULE_15__.itemShorthand,
+
+  /** A label can appear as a ribbon attaching itself to an element. */
+  ribbon: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool), prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(['right'])]),
+
+  /** A label can have different sizes. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_13___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_14__.SIZES),
+
+  /** A label can appear as a tag. */
+  tag: (prop_types__WEBPACK_IMPORTED_MODULE_13___default().bool)
+} : 0;
+Label.Detail = _LabelDetail__WEBPACK_IMPORTED_MODULE_12__["default"];
+Label.Group = _LabelGroup__WEBPACK_IMPORTED_MODULE_16__["default"];
+Label.create = (0,_lib__WEBPACK_IMPORTED_MODULE_17__.createShorthandFactory)(Label, function (value) {
+  return {
+    content: value
+  };
+});
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Label/LabelDetail.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Label/LabelDetail.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/factories.js");
+
+
+
+
+
+
+function LabelDetail(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('detail', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_3__["default"])(LabelDetail, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(LabelDetail, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_5__.isNil(children) ? content : children);
+}
+
+LabelDetail.handledProps = ["as", "children", "className", "content"];
+LabelDetail.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().node),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().string),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_7__.contentShorthand
+} : 0;
+LabelDetail.create = (0,_lib__WEBPACK_IMPORTED_MODULE_8__.createShorthandFactory)(LabelDetail, function (val) {
+  return {
+    content: val
+  };
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LabelDetail);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/elements/Label/LabelGroup.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/elements/Label/LabelGroup.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/classNameBuilders.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getUnhandledProps.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/getElementType.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/childrenUtils.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/SUI.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib */ "./node_modules/semantic-ui-react/dist/es/lib/customPropTypes.js");
+
+
+
+
+
+/**
+ * A label can be grouped.
+ */
+
+function LabelGroup(props) {
+  var children = props.children,
+      circular = props.circular,
+      className = props.className,
+      color = props.color,
+      content = props.content,
+      size = props.size,
+      tag = props.tag;
+  var classes = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('ui', color, size, (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(circular, 'circular'), (0,_lib__WEBPACK_IMPORTED_MODULE_3__.useKeyOnly)(tag, 'tag'), 'labels', className);
+  var rest = (0,_lib__WEBPACK_IMPORTED_MODULE_4__["default"])(LabelGroup, props);
+  var ElementType = (0,_lib__WEBPACK_IMPORTED_MODULE_5__["default"])(LabelGroup, props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(ElementType, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, rest, {
+    className: classes
+  }), _lib__WEBPACK_IMPORTED_MODULE_6__.isNil(children) ? content : children);
+}
+
+LabelGroup.handledProps = ["as", "children", "circular", "className", "color", "content", "size", "tag"];
+LabelGroup.propTypes =  true ? {
+  /** An element type to render as (string or function). */
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().elementType),
+
+  /** Primary content. */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().node),
+
+  /** Labels can share shapes. */
+  circular: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+
+  /** Additional classes. */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().string),
+
+  /** Label group can share colors together. */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_7___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_8__.COLORS),
+
+  /** Shorthand for primary content. */
+  content: _lib__WEBPACK_IMPORTED_MODULE_9__.contentShorthand,
+
+  /** Label group can share sizes together. */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_7___default().oneOf(_lib__WEBPACK_IMPORTED_MODULE_8__.SIZES),
+
+  /** Label group can share tag formatting. */
+  tag: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LabelGroup);
 
 /***/ }),
 
@@ -67109,6 +68344,71 @@ var getUnhandledProps = function getUnhandledProps(Component, props) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getUnhandledProps);
+
+/***/ }),
+
+/***/ "./node_modules/semantic-ui-react/dist/es/lib/htmlPropsUtils.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/semantic-ui-react/dist/es/lib/htmlPropsUtils.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "htmlInputAttrs": () => (/* binding */ htmlInputAttrs),
+/* harmony export */   "htmlInputEvents": () => (/* binding */ htmlInputEvents),
+/* harmony export */   "htmlInputProps": () => (/* binding */ htmlInputProps),
+/* harmony export */   "htmlImageProps": () => (/* binding */ htmlImageProps),
+/* harmony export */   "partitionHTMLProps": () => (/* binding */ partitionHTMLProps)
+/* harmony export */ });
+/* harmony import */ var lodash_es_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash-es/includes */ "./node_modules/lodash-es/includes.js");
+/* harmony import */ var lodash_es_forEach__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash-es/forEach */ "./node_modules/lodash-es/forEach.js");
+
+
+var htmlInputAttrs = [// REACT
+'selected', 'defaultValue', 'defaultChecked', // LIMITED HTML PROPS
+'accept', 'autoCapitalize', 'autoComplete', 'autoCorrect', 'autoFocus', 'checked', 'disabled', 'form', 'id', 'inputMode', 'lang', 'list', 'max', 'maxLength', 'min', 'minLength', 'multiple', 'name', 'pattern', 'placeholder', 'readOnly', 'required', 'step', 'title', 'type', 'value'];
+var htmlInputEvents = [// EVENTS
+// keyboard
+'onKeyDown', 'onKeyPress', 'onKeyUp', // focus
+'onFocus', 'onBlur', // form
+'onChange', 'onInput', // mouse
+'onClick', 'onContextMenu', 'onDrag', 'onDragEnd', 'onDragEnter', 'onDragExit', 'onDragLeave', 'onDragOver', 'onDragStart', 'onDrop', 'onMouseDown', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseOut', 'onMouseOver', 'onMouseUp', // selection
+'onSelect', // touch
+'onTouchCancel', 'onTouchEnd', 'onTouchMove', 'onTouchStart'];
+var htmlInputProps = [].concat(htmlInputAttrs, htmlInputEvents);
+var htmlImageProps = ['alt', 'height', 'src', 'srcSet', 'width', 'loading'];
+/**
+ * Returns an array of objects consisting of: props of html input element and rest.
+ * @param {object} props A ReactElement props object
+ * @param {Object} [options={}]
+ * @param {Array} [options.htmlProps] An array of html input props
+ * @param {boolean} [options.includeAria] Includes all input props that starts with "aria-"
+ * @returns {[{}, {}]} An array of objects
+ */
+
+var partitionHTMLProps = function partitionHTMLProps(props, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  var _options = options,
+      _options$htmlProps = _options.htmlProps,
+      htmlProps = _options$htmlProps === void 0 ? htmlInputProps : _options$htmlProps,
+      _options$includeAria = _options.includeAria,
+      includeAria = _options$includeAria === void 0 ? true : _options$includeAria;
+  var inputProps = {};
+  var rest = {};
+
+  (0,lodash_es_forEach__WEBPACK_IMPORTED_MODULE_0__["default"])(props, function (val, prop) {
+    var possibleAria = includeAria && (/^aria-.*$/.test(prop) || prop === 'role');
+    var target = (0,lodash_es_includes__WEBPACK_IMPORTED_MODULE_1__["default"])(htmlProps, prop) || possibleAria ? inputProps : rest;
+    target[prop] = val;
+  });
+
+  return [inputProps, rest];
+};
 
 /***/ }),
 
@@ -75855,6 +77155,79 @@ function inRange(number, start, end) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (inRange);
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash-es/includes.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash-es/includes.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _baseIndexOf_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_baseIndexOf.js */ "./node_modules/lodash-es/_baseIndexOf.js");
+/* harmony import */ var _isArrayLike_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isArrayLike.js */ "./node_modules/lodash-es/isArrayLike.js");
+/* harmony import */ var _isString_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./isString.js */ "./node_modules/lodash-es/isString.js");
+/* harmony import */ var _toInteger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toInteger.js */ "./node_modules/lodash-es/toInteger.js");
+/* harmony import */ var _values_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./values.js */ "./node_modules/lodash-es/values.js");
+
+
+
+
+
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * Checks if `value` is in `collection`. If `collection` is a string, it's
+ * checked for a substring of `value`, otherwise
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * is used for equality comparisons. If `fromIndex` is negative, it's used as
+ * the offset from the end of `collection`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Collection
+ * @param {Array|Object|string} collection The collection to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} [fromIndex=0] The index to search from.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
+ * @returns {boolean} Returns `true` if `value` is found, else `false`.
+ * @example
+ *
+ * _.includes([1, 2, 3], 1);
+ * // => true
+ *
+ * _.includes([1, 2, 3], 1, 2);
+ * // => false
+ *
+ * _.includes({ 'a': 1, 'b': 2 }, 1);
+ * // => true
+ *
+ * _.includes('abcd', 'bc');
+ * // => true
+ */
+function includes(collection, value, fromIndex, guard) {
+  collection = (0,_isArrayLike_js__WEBPACK_IMPORTED_MODULE_0__["default"])(collection) ? collection : (0,_values_js__WEBPACK_IMPORTED_MODULE_1__["default"])(collection);
+  fromIndex = (fromIndex && !guard) ? (0,_toInteger_js__WEBPACK_IMPORTED_MODULE_2__["default"])(fromIndex) : 0;
+
+  var length = collection.length;
+  if (fromIndex < 0) {
+    fromIndex = nativeMax(length + fromIndex, 0);
+  }
+  return (0,_isString_js__WEBPACK_IMPORTED_MODULE_3__["default"])(collection)
+    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+    : (!!length && (0,_baseIndexOf_js__WEBPACK_IMPORTED_MODULE_4__["default"])(collection, value, fromIndex) > -1);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (includes);
 
 
 /***/ }),

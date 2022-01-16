@@ -14,12 +14,13 @@ class FavoritesController extends Controller
     }
 
     public function storeFavorite(Request $request){
-        $inputs = $request ->validate([
-            'title'=>'required',
-            'link'=>'required',
-        ]);
-        $inputs->user_id = auth()->user()->id;
-        auth()->user()->favorites()->create($inputs);
+        return 'testing';
+//        $inputs = $request ->validate([
+//            'title'=>'required',
+//            'link'=>'required',
+//        ]);
+//        $inputs->user_id = auth()->user()->id;
+//        auth()->user()->favorites()->create($inputs);
     }
 
     public function removeFavorites($id){

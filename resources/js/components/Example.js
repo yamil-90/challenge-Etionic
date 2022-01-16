@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
-import {Dimmer, Loader, Table, Pagination} from 'semantic-ui-react';
+import {Dimmer, Loader, Table, Pagination, Button} from 'semantic-ui-react';
 
 const Example = () => {
 
@@ -20,8 +20,6 @@ const Example = () => {
             setOpacity(1);
             setNews(data);
             // console.log(data);
-
-
         } catch (e) {
             console.log(e)
         }
@@ -42,6 +40,20 @@ const Example = () => {
 
         }
     }, [news])
+
+    const setFavorite = async (title, id) => {
+        try {
+            const result = await axios.post('/api/save-favorite', {
+                title,
+                id,
+            });
+            return result.data;
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+
 
     const handlePaginationChange = (e, {activePage}) => {
         setActivePage(activePage);
@@ -91,6 +103,10 @@ const Example = () => {
                         <Table.Row>
                             <Table.Cell>{data.title}</Table.Cell>
                             <Table.Cell>{data.id}</Table.Cell>
+                            <Button
+            icon="star"
+            onClick={() => setFavorite(data.title, data.id)}
+          />
                         </Table.Row>
                     </Table.Body>
                 ))}
