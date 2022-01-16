@@ -6520,6 +6520,9 @@ var Example = function Example() {
       };
     }();
 
+    axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/user').then(function (response) {
+      console.log('user es', response.data);
+    });
     fetchData();
   }, [getAllNews]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
@@ -6530,7 +6533,7 @@ var Example = function Example() {
   }, [news]);
 
   var setFavorite = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(title, id) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(title, link) {
       var result;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
@@ -6540,7 +6543,8 @@ var Example = function Example() {
               _context3.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/save-favorite', {
                 title: title,
-                id: id
+                link: link,
+                user_id: window.userId
               });
 
             case 3:
@@ -6671,24 +6675,24 @@ var Example = function Example() {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].HeaderCell, {
             children: "Title"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].HeaderCell, {
-            children: "Id"
+            children: "Save as Favorite"
           })]
         })
-      }), newsToRender.length !== 0 && Promise.allSettled(newsToRender) && newsToRender.map(function (data) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Body, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Row, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Body, {
+        children: newsToRender.length !== 0 && Promise.allSettled(newsToRender) && newsToRender.map(function (data) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Row, {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
               children: data.title
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_8__["default"].Cell, {
-              children: data.id
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
-              icon: "star",
-              onClick: function onClick() {
-                return setFavorite(data.title, data.id);
-              }
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["default"], {
+                icon: "star",
+                onClick: function onClick() {
+                  return setFavorite(data.title, data.url);
+                }
+              })
             })]
-          })
-        });
+          }, data.id);
+        })
       })]
     }), newsToRender && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(semantic_ui_react__WEBPACK_IMPORTED_MODULE_10__["default"], {
       boundaryRange: 0,
@@ -6702,8 +6706,8 @@ var Example = function Example() {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Example);
 
-if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Example, {}), document.getElementById('app'));
+if (document.getElementById('mainApp')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Example, {}), document.getElementById('mainApp'));
 }
 
 /***/ }),

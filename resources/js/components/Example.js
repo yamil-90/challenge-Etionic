@@ -30,6 +30,10 @@ const Example = () => {
             // console.log('get all')
             await getAllNews();
         }
+        axios.get('/api/user')
+            .then(response => {
+                console.log('user es', response.data);
+            });
 
         fetchData();
     }, [getAllNews]);
@@ -41,18 +45,18 @@ const Example = () => {
         }
     }, [news])
 
-    const setFavorite = async (title, id) => {
+    const setFavorite = async (title, link) => {
         try {
             const result = await axios.post('/api/save-favorite', {
                 title,
-                id,
+                link,
+                user_id: window.userId
             });
             return result.data;
         } catch (err) {
             console.log(err);
         }
     };
-
 
 
     const handlePaginationChange = (e, {activePage}) => {
@@ -74,7 +78,7 @@ const Example = () => {
         // console.log('get the news inside')
         return Promise.all(newsArray.map(async newsId => {
             try {
-                const result =  await axios.get(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`)
+                const result = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`)
                 // console.log('result dentro de get the news es', result)
                 return result.data
             } catch (err) {
@@ -95,21 +99,22 @@ const Example = () => {
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Title</Table.HeaderCell>
-                        <Table.HeaderCell>Id</Table.HeaderCell>
+                        <Table.HeaderCell>Save as Favorite</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
-                {(newsToRender.length !== 0 && Promise.allSettled(newsToRender)) && newsToRender.map((data) => (
-                    <Table.Body>
-                        <Table.Row>
+                <Table.Body>
+                    {(newsToRender.length !== 0 && Promise.allSettled(newsToRender)) && newsToRender.map((data) => (
+                        <Table.Row key={data.id}>
                             <Table.Cell>{data.title}</Table.Cell>
-                            <Table.Cell>{data.id}</Table.Cell>
-                            <Button
-            icon="star"
-            onClick={() => setFavorite(data.title, data.id)}
-          />
+                            <Table.Cell>
+                                <Button
+                                    icon="star"
+                                    onClick={() => setFavorite(data.title, data.url)}
+                                />
+                            </Table.Cell>
                         </Table.Row>
-                    </Table.Body>
-                ))}
+                    ))}
+                </Table.Body>
             </Table>
             {newsToRender && (
                 <Pagination
@@ -126,6 +131,6 @@ const Example = () => {
 
 export default Example;
 
-if (document.getElementById('app')) {
-    ReactDOM.render(<Example/>, document.getElementById('app'));
+if (document.getElementById('mainApp')) {
+    ReactDOM.render(<Example/>, document.getElementById('mainApp'));
 }
