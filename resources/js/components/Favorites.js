@@ -16,11 +16,11 @@ const Favorites = () => {
         setLoading(false)
     },[reloading])
 
-    const getFavorites = async (userId) => {
+    const getFavorites = async (user_id) => {
         try {
             const response = await axios.get('/api/get-favorites', {
                 params: {
-                    userId
+                    user_id
                 }
             });
             console.log('data es',response.data)

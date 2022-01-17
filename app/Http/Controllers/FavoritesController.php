@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorites;
+use FavoriteService;
+use HackerNewsClient\Repositories\FavoriteRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FavoritesController extends Controller
 {
-    public function favoritesIndex()
+    private $service;
+
+    public function __construct()
     {
-        return view('favorites');
+        $repository = new FavoriteRepository();
+        $this->service = new FavoriteService($repository);
     }
 
 
@@ -18,14 +23,14 @@ class FavoritesController extends Controller
     {
         $favorites = DB::table('favorites')
             ->select('link_id', 'link', 'title')
-            ->where('user_id', '=', $request->userId)
+            ->where('user_id', '=', $request->user_id)
             ->get();
         return $favorites;
     }
 
     public function storeFavorite(Request $request)
     {
-        $message = ['status' => 'error'];
+        $message = ['status' => 'store error'];
         $status = 500;
             try {
                 $inputs = $request->validate([
@@ -52,20 +57,16 @@ class FavoritesController extends Controller
     {
         $message = ['status' => 'error deleting'];
         $status = 500;
-        try {
-            $request->validate([
+         $request->validate([
                 'user_id' => 'required',
                 'link_id' => 'required'
             ]);
-            DB::table('favorites')->where('user_id', '=', $request->user_id)->where('link_id', '=', $request->link_id)->delete();
 
-            $message = ['status' => 'deleted'];
-            $status = 201;
+         if($this->service->remove($request->user_id, $request->link_id)) {
+             $message = ['status' => 'deleted'];
+             $status = 200;
+         }
 
-        } catch (\Exception $e) {
-            logger($e);
-            $message['status'] = $e->getMessage();
-        }
         return response()->json($message, $status);
 
     }
