@@ -1,11 +1,12 @@
 <?php
 
-namespace HackerNewsClient\Contracts;
+namespace App\Contracts;
 
 interface IFavoriteRepository
 {
-    public function get();
-    public function store();
-    public function remove(int $userId, int $linkId) : bool;
+    public function getAll(int $user_id);
+    public function get(int $user_id, int $link_id);
+    public function store(string $title, string $link, int $user_id, int $link_id);
+    public function remove(int $user_Id, int $link_Id) : bool;
 
 }

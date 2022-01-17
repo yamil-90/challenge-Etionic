@@ -3,18 +3,36 @@ import axios from 'axios';
 import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
 import Nav from "./Nav";
 
+import { deleteFavorite } from '../utils/helpers';
+
 const Favorites = () => {
     const [pages, setPages] = useState(1)
     const [loading, setLoading] = useState(true);
     const [favorites, setFavorites] = useState([]);
+    const [openPortal, setOpenPortal] = useState(false);
+    const [portalMessage, setPortalMessage] = useState('');
     const [reloading, setReloading] = useState(false);
-    const [activePage, setActivePage] = useState(1)
+    const [activePage, setActivePage] = useState(1);
 
     useEffect(()=>{
         getFavorites(window.userId)
         setReloading(false)
         setLoading(false)
     },[reloading])
+
+    const handleOpen = () => {
+        setOpenPortal(true)
+
+    }
+
+    const handleClose = () => {
+        setOpenPortal(false)
+    }
+
+    const showStatusPortal = (status) => {
+        handleOpen()
+        setPortalMessage(status)
+    }
 
     const getFavorites = async (user_id) => {
         try {
@@ -23,38 +41,12 @@ const Favorites = () => {
                     user_id
                 }
             });
-            console.log('data es',response.data)
             setFavorites(response.data);
             setLoading(false)
 
         }catch (e) {
             console.log('error es',e)
         }
-    }
-
-    const deleteFavorite = async (link_id) => {
-        try {
-            setLoading(true)
-            const result = await axios.delete('/api/delete-favorite', {
-                data: {
-                    link_id,
-                    user_id: window.userId
-                }
-            });
-
-            const newArray =favorites.filter((item)=>(
-                item !== link_id && item
-            ))
-            setFavorites(newArray)
-            setReloading(true)
-            showStatusPortal(result.data.status)
-        } catch (err) {
-            showStatusPortal()
-            console.error(err);
-        }
-    };
-    const showStatusPortal = (status) => {
-
     }
 
     const handlePaginationChange = (e, {activePage}) => {
@@ -66,6 +58,25 @@ const Favorites = () => {
     return (
         <>
             <Nav/>
+            <Portal
+                closeOnTriggerClick
+                openOnTriggerClick
+                onOpen={handleOpen}
+                onClose={handleClose}
+                open={openPortal}
+            >
+                <Segment
+                    style={{
+                        left: '40%',
+                        position: 'fixed',
+                        top: '50%',
+                        zIndex: 1000,
+                    }}
+                >
+                    <Header>Notification</Header>
+                    <p>{portalMessage}</p>
+                </Segment>
+            </Portal>
         {loading && (
                 <Dimmer inverted active style={{paddingTop: 20, paddingBottom: 20}}>
                     <Loader inverted>Loading...</Loader>
@@ -92,7 +103,13 @@ const Favorites = () => {
 
                                     <Button
                                         icon="trash"
-                                        onClick={() => deleteFavorite(data.link_id)}
+                                        onClick={async () => {
+                                            const status = await deleteFavorite(data.link_id,)
+                                            showStatusPortal(status)
+                                            if (status === 'Entry deleted successfully') {
+                                                setReloading(true)
+                                            }
+                                        }}
                                     />
                             </Table.Cell>
                         </Table.Row>

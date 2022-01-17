@@ -3,6 +3,8 @@ import axios from 'axios';
 import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
 import Nav from "./Nav";
 
+import {setFavorite, deleteFavorite} from '../utils/helpers';
+
 const Home = () => {
 
     const [pages, setPages] = useState(1)
@@ -15,8 +17,6 @@ const Home = () => {
     const [reloading, setReloading] = useState(false)
 
 
-
-
     const handleOpen = () => {
         setOpenPortal(true)
 
@@ -27,9 +27,8 @@ const Home = () => {
     }
 
     const showStatusPortal = (status) => {
-        const message = status === 'ok' ? 'Favorite was saved' : 'There was an error while saving'
         handleOpen()
-        setPortalMessage(message)
+        setPortalMessage(status)
     }
 
     const getAllNews = useCallback(async () => {
@@ -63,45 +62,6 @@ const Home = () => {
     useEffect(() => {
         setReloading(false)
     }, [reloading])
-
-    const setFavorite = async (title, link_id, link) => {
-        try {
-            const result = await axios.post('/api/save-favorite', {
-                title,
-                link,
-                link_id,
-                user_id: window.userId
-            });
-
-            window.favoritesIdArray.push(link_id)
-            setReloading(true)
-            showStatusPortal(result.data.status)
-        } catch (err) {
-            showStatusPortal()
-            console.error(err);
-        }
-    };
-
-    const deleteFavorite = async (link_id) => {
-        try {
-            const result = await axios.delete('/api/delete-favorite', {
-                data: {
-                    link_id,
-                    user_id: window.userId
-                }
-            });
-
-            const newArray =window.favoritesIdArray.filter((item)=>(
-                item !== link_id && item
-            ))
-            window.favoritesIdArray = newArray
-            setReloading(true)
-            showStatusPortal(result.data.status)
-        } catch (err) {
-            showStatusPortal()
-            console.error(err);
-        }
-    };
 
     const handlePaginationChange = (e, {activePage}) => {
         setActivePage(activePage);
@@ -137,6 +97,7 @@ const Home = () => {
                 openOnTriggerClick
                 onOpen={handleOpen}
                 onClose={handleClose}
+                open={openPortal}
             >
                 <Segment
                     style={{
@@ -148,7 +109,6 @@ const Home = () => {
                 >
                     <Header>Notification</Header>
                     <p>{portalMessage}</p>
-                    <p>To close, simply click the close button or click away</p>
                 </Segment>
             </Portal>
             {loading && (
@@ -177,11 +137,24 @@ const Home = () => {
                                 {window.favoritesIdArray.indexOf(data.id) > -1 ?
                                     <Button
                                         icon="trash"
-                                        onClick={() => deleteFavorite(data.id)}
+                                        onClick={async () => {
+                                            const status = await deleteFavorite(data.id,)
+                                            showStatusPortal(status)
+                                            if (status === 'Entry deleted successfully') {
+                                                setReloading(true)
+                                            }
+                                        }}
                                     /> :
                                     <Button
                                         icon="star"
-                                        onClick={() => setFavorite(data.title, data.id, data.url)}
+                                        onClick={async () => {
+                                            const status = await setFavorite(data.title, data.id, data.url)
+                                            showStatusPortal(status)
+                                            if (status === 'Entry saved successfully') {
+                                                window.favoritesIdArray.push(data.id)
+                                                setReloading(true)
+                                            }
+                                        }}
                                     />
                                 }
                             </Table.Cell>

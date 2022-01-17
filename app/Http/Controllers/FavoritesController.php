@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorites;
-use FavoriteService;
-use HackerNewsClient\Repositories\FavoriteRepository;
+use App\Services\FavoriteService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class FavoritesController extends Controller
 {
@@ -14,17 +11,13 @@ class FavoritesController extends Controller
 
     public function __construct()
     {
-        $repository = new FavoriteRepository();
-        $this->service = new FavoriteService($repository);
+        $this->service = new FavoriteService();
     }
 
 
     public function getFavorites(Request $request)
     {
-        $favorites = DB::table('favorites')
-            ->select('link_id', 'link', 'title')
-            ->where('user_id', '=', $request->user_id)
-            ->get();
+        $favorites = $this->service->getAll($request->user_id);
         return $favorites;
     }
 
@@ -32,42 +25,35 @@ class FavoritesController extends Controller
     {
         $message = ['status' => 'store error'];
         $status = 500;
-            try {
-                $inputs = $request->validate([
-                    'title' => 'required',
-                    'link' => '',
-                    'user_id' => 'required',
-                    'link_id' => 'required'
-                ]);
-                Favorites::create($inputs);
-                $message = ['status' => 'ok'];
-                $status = 201;
 
-            } catch (\Exception $e) {
-                logger($e);
-                $message['status'] = $e->getMessage();
-            }
-
+        $request->validate([
+            'title' => 'required',
+            'link' => '',
+            'user_id' => 'required',
+            'link_id' => 'required'
+        ]);
+        if ($this->service->store($request->title, $request->link, $request->user_id, $request->link_id)) {
+            $message = ['status' => 'Entry saved successfully'];
+            $status = 201;
+        }
 
         return response()->json($message, $status);
-
     }
 
     public function deleteFavorite(Request $request)
     {
-        $message = ['status' => 'error deleting'];
+        $message = ['status' => 'delete error'];
         $status = 500;
-         $request->validate([
-                'user_id' => 'required',
-                'link_id' => 'required'
-            ]);
+        $request->validate([
+            'user_id' => 'required',
+            'link_id' => 'required'
+        ]);
 
-         if($this->service->remove($request->user_id, $request->link_id)) {
-             $message = ['status' => 'deleted'];
-             $status = 200;
-         }
+        if ($this->service->remove($request->user_id, $request->link_id)) {
+            $message = ['status' => 'Entry deleted successfully'];
+            $status = 200;
+        }
 
         return response()->json($message, $status);
-
     }
 }
