@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
+import Nav from "./Nav";
 
 const Home = () => {
 
@@ -130,6 +131,7 @@ const Home = () => {
     }
     return (
         <>
+            <Nav/>
             <Portal
                 closeOnTriggerClick
                 openOnTriggerClick

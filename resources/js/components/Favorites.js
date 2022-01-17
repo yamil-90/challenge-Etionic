@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
+import Nav from "./Nav";
 
 const Favorites = () => {
     const [pages, setPages] = useState(1)
@@ -8,6 +9,26 @@ const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
     const [reloading, setReloading] = useState(false);
     const [activePage, setActivePage] = useState(1)
+
+    useEffect(()=>{
+        getFavorites(window.userId)
+    },[])
+
+    const getFavorites = async (userId) => {
+        try {
+            const response = await axios.get('/api/get-favorites', {
+                data:{
+                    userId
+                }
+            });
+            console.log('data es',response.data)
+            setFavorites(response.data);
+            setLoading(false)
+
+        }catch (e) {
+            console.log('error es',e)
+        }
+    }
 
     const deleteFavorite = async (link_id) => {
         try {
@@ -41,6 +62,7 @@ const Favorites = () => {
 
     return (
         <>
+            <Nav/>
         {loading && (
                 <Dimmer inverted active style={{paddingTop: 20, paddingBottom: 20}}>
                     <Loader inverted>Loading...</Loader>

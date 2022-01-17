@@ -16,10 +16,9 @@ class FavoritesController extends Controller
 
     public function getFavorites(Request $request)
     {
-
         $favorites = DB::table('favorites')
             ->select('link_id', 'link')
-            ->where('user_id', '=', $request->user_id)
+            ->where('user_id', '=', $request->userId)
             ->get();
         return $favorites;
     }
