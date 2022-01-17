@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/save-favorite', [FavoritesController::class, 'storeFavorite']);
 
-Route::delete('/delete-favorite', [FavoritesController::class,'removeFavorites']);
+Route::delete('/delete-favorite', [FavoritesController::class,'deleteFavorite']);

@@ -1,24 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
-import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
 import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
 
-const Example = () => {
+const Home = () => {
 
     const [pages, setPages] = useState(1)
     const [activePage, setActivePage] = useState(1)
     const [news, setNews] = useState([])
     const [newsToRender, setNewsToRender] = useState([])
-    const [opacity, setOpacity] = useState(0.5)
     const [openPortal, setOpenPortal] = useState(false)
     const [portalMessage, setPortalMessage] = useState('')
-    const [favorites, setFavorites] = useState([])
     const [loading, setLoading] = useState(true)
     const [reloading, setReloading] = useState(false)
 
 
-    //portal functions
+
 
     const handleOpen = () => {
         setOpenPortal(true)
@@ -40,7 +36,6 @@ const Example = () => {
             const response = await axios.get('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty');
 
             const {data} = response;
-            setOpacity(1);
             setNews(data);
             setPages(data.length);
 
@@ -52,8 +47,6 @@ const Example = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            setFavorites(window.favoritesIdArray);
-            console.log(window.favoritesIdArray)
             await getAllNews();
         }
         fetchData();
@@ -62,7 +55,6 @@ const Example = () => {
 
     useEffect(() => {
         if (news.length !== 0) {
-            // console.log('cycle start')
             cycleTheNews()
         }
     }, [news])
@@ -79,6 +71,8 @@ const Example = () => {
                 link_id,
                 user_id: window.userId
             });
+
+            window.favoritesIdArray.push(link_id)
             setReloading(true)
             showStatusPortal(result.data.status)
         } catch (err) {
@@ -87,6 +81,26 @@ const Example = () => {
         }
     };
 
+    const deleteFavorite = async (link_id) => {
+        try {
+            const result = await axios.delete('/api/delete-favorite', {
+                data: {
+                    link_id,
+                    user_id: window.userId
+                }
+            });
+
+            const newArray =window.favoritesIdArray.filter((item)=>(
+                item !== link_id && item
+            ))
+            window.favoritesIdArray = newArray
+            setReloading(true)
+            showStatusPortal(result.data.status)
+        } catch (err) {
+            showStatusPortal()
+            console.error(err);
+        }
+    };
 
     const handlePaginationChange = (e, {activePage}) => {
         setActivePage(activePage);
@@ -105,20 +119,15 @@ const Example = () => {
     }
 
     const getTheNews = async (newsArray) => {
-        // console.log('get the news inside')
         return Promise.all(newsArray.map(async newsId => {
             try {
                 const result = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`)
-                // console.log('result dentro de get the news es', result)
                 return result.data
             } catch (err) {
                 console.log(err)
             }
         }))
-
-
     }
-
     return (
         <>
             <Portal
@@ -163,10 +172,10 @@ const Example = () => {
 
                             </Table.Cell>
                             <Table.Cell>
-                                {(window.favoritesIdArray.indexOf(data.id) > -1 && !reloading) ?
+                                {window.favoritesIdArray.indexOf(data.id) > -1 ?
                                     <Button
                                         icon="trash"
-                                        onClick={() => setFavorite(data.title, data.id, data.url)}
+                                        onClick={() => deleteFavorite(data.id)}
                                     /> :
                                     <Button
                                         icon="star"
@@ -191,8 +200,5 @@ const Example = () => {
     );
 }
 
-export default Example;
+export default Home;
 
-if (document.getElementById('mainApp')) {
-    ReactDOM.render(<Example/>, document.getElementById('mainApp'));
-}

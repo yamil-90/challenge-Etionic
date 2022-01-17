@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorites;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FavoritesController extends Controller
 {
-    //
+    public function favoritesIndex()
+    {
+        return view('favorites');
+    }
+
+
     public function getFavorites(Request $request)
     {
-        dd($request);
+
         $favorites = DB::table('favorites')
-            ->select('link_id')
-            ->where('user_id', '=', $inputs->user_id)
+            ->select('link_id', 'link')
+            ->where('user_id', '=', $request->user_id)
             ->get();
         return $favorites;
     }
@@ -24,11 +28,10 @@ class FavoritesController extends Controller
     {
         $message = ['status' => 'error'];
         $status = 500;
-//
             try {
                 $inputs = $request->validate([
                     'title' => 'required',
-                    'link' => 'required',
+                    'link' => '',
                     'user_id' => 'required',
                     'link_id' => 'required'
                 ]);
@@ -46,19 +49,17 @@ class FavoritesController extends Controller
 
     }
 
-    public function removeFavorites(Request $request)
+    public function deleteFavorite(Request $request)
     {
         $message = ['status' => 'error deleting'];
         $status = 500;
         try {
-            $inputs = $request->validate([
-                'title' => 'required',
-                'link' => 'required',
+            $request->validate([
                 'user_id' => 'required',
                 'link_id' => 'required'
             ]);
-            $favorites = DB::table('favorites')->where('user_id', '=', $request->user_id)->where('link_id', '=', $request->link_id)->get();
-            $favorites->delete();
+            DB::table('favorites')->where('user_id', '=', $request->user_id)->where('link_id', '=', $request->link_id)->delete();
+
             $message = ['status' => 'deleted'];
             $status = 201;
 
