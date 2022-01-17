@@ -12,12 +12,14 @@ const Favorites = () => {
 
     useEffect(()=>{
         getFavorites(window.userId)
-    },[])
+        setReloading(false)
+        setLoading(false)
+    },[reloading])
 
     const getFavorites = async (userId) => {
         try {
             const response = await axios.get('/api/get-favorites', {
-                data:{
+                params: {
                     userId
                 }
             });
@@ -32,6 +34,7 @@ const Favorites = () => {
 
     const deleteFavorite = async (link_id) => {
         try {
+            setLoading(true)
             const result = await axios.delete('/api/delete-favorite', {
                 data: {
                     link_id,
@@ -39,10 +42,10 @@ const Favorites = () => {
                 }
             });
 
-            const newArray =window.favoritesIdArray.filter((item)=>(
+            const newArray =favorites.filter((item)=>(
                 item !== link_id && item
             ))
-            window.favoritesIdArray = newArray
+            setFavorites(newArray)
             setReloading(true)
             showStatusPortal(result.data.status)
         } catch (err) {
@@ -72,14 +75,14 @@ const Favorites = () => {
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Title</Table.HeaderCell>
-                        <Table.HeaderCell>Save as Favorite</Table.HeaderCell>
+                        <Table.HeaderCell>Remove from Favorites</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
                     {(favorites.length !== 0 && Promise.allSettled(favorites)) && favorites.map((data) => (
-                        <Table.Row key={data.id}>
+                        <Table.Row key={data.link_id}>
                             <Table.Cell>
-                                <a href={data.url} target="_blank">
+                                <a href={data.link} target="_blank">
                                     <Icon name="external alternate"/>
                                 </a>
                                 {data.title}
@@ -89,7 +92,7 @@ const Favorites = () => {
 
                                     <Button
                                         icon="trash"
-                                        onClick={() => deleteFavorite(data.id)}
+                                        onClick={() => deleteFavorite(data.link_id)}
                                     />
                             </Table.Cell>
                         </Table.Row>
