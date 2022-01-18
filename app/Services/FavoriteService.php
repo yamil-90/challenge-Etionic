@@ -20,7 +20,7 @@ class FavoriteService
 
     public function store(string $title, string $link, int $user_id, int $link_id)
     {
-        if ($this->repo->get($user_id, $link_id) > 0) {
+        if ($this->repo->get((int)$user_id, (int)$link_id) > 0) {
             return false;
         }
 

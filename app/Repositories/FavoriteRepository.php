@@ -67,7 +67,7 @@ class FavoriteRepository implements IFavoriteRepository
             return DB::table('favorites')
                 ->where('user_id', '=', $user_Id)
                 ->where('link_id', '=', $link_Id)
-                ->get();
+                ->count();
         } catch (\Exception $e) {
             logger($e);
             return false;

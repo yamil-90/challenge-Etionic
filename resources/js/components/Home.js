@@ -33,7 +33,11 @@ const Home = () => {
 
     const getAllNews = useCallback(async () => {
         try {
-            const response = await axios.get('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty');
+            const response = await axios.get('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty', {
+                config: {
+                    headers: {Authorization: `Bearer ${window.userToken}`}
+                }
+            });
 
             const {data} = response;
             setNews(data);
@@ -43,7 +47,6 @@ const Home = () => {
             console.log(e)
         }
     }, [activePage]);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,6 +65,10 @@ const Home = () => {
     useEffect(() => {
         setReloading(false)
     }, [reloading])
+
+    useEffect(() => {
+        setTimeout(() => setOpenPortal(false), 2000)
+    }, [openPortal])
 
     const handlePaginationChange = (e, {activePage}) => {
         setActivePage(activePage);
@@ -90,8 +97,12 @@ const Home = () => {
         }))
     }
     return (
-        <>
+        <Segment
+            inverted
+            className='neonBorder'
+        >
             <Nav/>
+            <h3>Latest News</h3>
             <Portal
                 closeOnTriggerClick
                 openOnTriggerClick
@@ -101,13 +112,13 @@ const Home = () => {
             >
                 <Segment
                     style={{
-                        left: '40%',
-                        position: 'fixed',
-                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, 0)',
+                        position: 'absolute',
+                        top: '10%',
                         zIndex: 1000,
                     }}
                 >
-                    <Header>Notification</Header>
                     <p>{portalMessage}</p>
                 </Segment>
             </Portal>
@@ -116,11 +127,11 @@ const Home = () => {
                     <Loader inverted>Loading...</Loader>
                 </Dimmer>
             )}
-            <Table>
+            <Table inverted celled fixed singleLine>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Title</Table.HeaderCell>
-                        <Table.HeaderCell>Save as Favorite</Table.HeaderCell>
+                        <Table.HeaderCell textAlign='center'>Save as Favorite</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -133,9 +144,11 @@ const Home = () => {
                                 {data.title}
 
                             </Table.Cell>
-                            <Table.Cell>
+                            <Table.Cell textAlign='center'>
                                 {window.favoritesIdArray.indexOf(data.id) > -1 ?
                                     <Button
+                                        inverted
+                                        color='red'
                                         icon="trash"
                                         onClick={async () => {
                                             const status = await deleteFavorite(data.id,)
@@ -146,13 +159,19 @@ const Home = () => {
                                         }}
                                     /> :
                                     <Button
+                                        inverted
+                                        color='yellow'
                                         icon="star"
                                         onClick={async () => {
-                                            const status = await setFavorite(data.title, data.id, data.url)
-                                            showStatusPortal(status)
-                                            if (status === 'Entry saved successfully') {
-                                                window.favoritesIdArray.push(data.id)
-                                                setReloading(true)
+                                            if (!data.url) {
+                                                showStatusPortal("This news has no link so it can't ve saved as favorite")
+                                            } else {
+                                                const status = await setFavorite(data.title, data.id, data.url)
+                                                showStatusPortal(status)
+                                                if (status === 'Entry saved successfully') {
+                                                    window.favoritesIdArray.push(data.id)
+                                                    setReloading(true)
+                                                }
                                             }
                                         }}
                                     />
@@ -171,7 +190,7 @@ const Home = () => {
                     onPageChange={handlePaginationChange}
                 />
             )}
-        </>
+        </Segment>
     );
 }
 

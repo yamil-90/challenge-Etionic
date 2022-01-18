@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {Dimmer, Loader, Table, Pagination, Button, Portal, Segment, Header, Icon} from 'semantic-ui-react';
 import Nav from "./Nav";
+import styles from '../../css/styles.css'
 
-import { deleteFavorite } from '../utils/helpers';
+import {deleteFavorite, API} from '../utils/helpers';
 
 const Favorites = () => {
     const [pages, setPages] = useState(1)
@@ -14,15 +14,18 @@ const Favorites = () => {
     const [reloading, setReloading] = useState(false);
     const [activePage, setActivePage] = useState(1);
 
-    useEffect(()=>{
+    useEffect(() => {
         getFavorites(window.userId)
         setReloading(false)
         setLoading(false)
-    },[reloading])
+    }, [reloading])
+
+    useEffect(() => {
+        setTimeout(() => setOpenPortal(false), 2000)
+    }, [openPortal])
 
     const handleOpen = () => {
         setOpenPortal(true)
-
     }
 
     const handleClose = () => {
@@ -36,7 +39,7 @@ const Favorites = () => {
 
     const getFavorites = async (user_id) => {
         try {
-            const response = await axios.get('/api/get-favorites', {
+            const response = await API.get('/api/get-favorites', {
                 params: {
                     user_id
                 }
@@ -44,8 +47,8 @@ const Favorites = () => {
             setFavorites(response.data);
             setLoading(false)
 
-        }catch (e) {
-            console.log('error es',e)
+        } catch (e) {
+            console.log('error es', e)
         }
     }
 
@@ -56,8 +59,9 @@ const Favorites = () => {
     };
 
     return (
-        <>
+        <Segment inverted className='neonBorder'>
             <Nav/>
+            <h3>Favorites</h3>
             <Portal
                 closeOnTriggerClick
                 openOnTriggerClick
@@ -66,10 +70,12 @@ const Favorites = () => {
                 open={openPortal}
             >
                 <Segment
+
                     style={{
-                        left: '40%',
-                        position: 'fixed',
-                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, 0)',
+                        position: 'absolute',
+                        top: '10%',
                         zIndex: 1000,
                     }}
                 >
@@ -77,12 +83,12 @@ const Favorites = () => {
                     <p>{portalMessage}</p>
                 </Segment>
             </Portal>
-        {loading && (
+            {loading && (
                 <Dimmer inverted active style={{paddingTop: 20, paddingBottom: 20}}>
                     <Loader inverted>Loading...</Loader>
                 </Dimmer>
             )}
-            <Table>
+            <Table inverted celled fixed singleLine>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Title</Table.HeaderCell>
@@ -95,22 +101,24 @@ const Favorites = () => {
                             <Table.Cell>
                                 <a href={data.link} target="_blank">
                                     <Icon name="external alternate"/>
+                                    {data.title}
                                 </a>
-                                {data.title}
+
 
                             </Table.Cell>
-                            <Table.Cell>
-
-                                    <Button
-                                        icon="trash"
-                                        onClick={async () => {
-                                            const status = await deleteFavorite(data.link_id,)
-                                            showStatusPortal(status)
-                                            if (status === 'Entry deleted successfully') {
-                                                setReloading(true)
-                                            }
-                                        }}
-                                    />
+                            <Table.Cell textAlign='center'>
+                                <Button
+                                    inverted
+                                    color='red'
+                                    icon="trash"
+                                    onClick={async () => {
+                                        const status = await deleteFavorite(data.link_id,)
+                                        showStatusPortal(status)
+                                        if (status === 'Entry deleted successfully') {
+                                            setReloading(true)
+                                        }
+                                    }}
+                                />
                             </Table.Cell>
                         </Table.Row>
                     ))}
@@ -125,7 +133,7 @@ const Favorites = () => {
                     onPageChange={handlePaginationChange}
                 />
             )}
-            </>
+        </Segment>
     )
 }
 
